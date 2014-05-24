@@ -1,0 +1,33 @@
+//extend sass
+@import 'bourbon';
+@import 'neat';
+// normalize for webapp
+@import 'normalize';
+
+// ancillary for app
+@import 'var';
+@import 'chrome';
+@import 'sgss';
+@import 'basic';
+
+
+    // @include grid-col;
+    // border: 1px solid #000000;
+
+    // height: 
+
+    // @media (min-width: 30em) {
+    //     @include grid-col("one half");
+    // }
+
+    // @media (min-width: 40em) {
+    //     @include grid-col("one third");
+    // }
+
+    // @media (min-width: 50em) {
+    //     @include grid-col("one quarter");
+    // }
+
+    // @media (min-width: 60em) {
+    //     @include grid-col("one sixth");
+    // }
