@@ -1,0 +1,39 @@
+@import "tile-new";
+
+
+.overlay {
+	display:none;
+	flex-direction:column;
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	background:rgba(#FFF, .85);
+	color:#334;
+	header {
+		background:rgba(#000,.65);
+		color:#9CF;
+		padding:.5rem;
+		text-align:right;
+		font-size:1.2em;
+	}
+	section {
+		flex:1;
+	}
+	footer {
+		background:rgba(#000,.65);
+		color:rgba(#FFF,.35);
+		padding:.5rem;
+		font-size:.85em;
+	}
+}
+
+.overlay-open {
+	.overlay {
+		display:flex;
+	}
+	.app {
+		-webkit-filter:blur(.5em);
+	}
+}

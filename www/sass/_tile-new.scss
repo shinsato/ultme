@@ -1,0 +1,7 @@
+input#radio-binary[type=radio] + div.options-binary {
+	display:none;
+}
+
+input#radio-binary[type=radio]:checked + div.options-binary {
+	display:inline;
+}
