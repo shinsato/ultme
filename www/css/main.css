@@ -441,29 +441,24 @@ body {
 h1, h2, h3, h4, h5 {
   font-weight: lighter; }
 
-header, footer, section {
+.app header, .app footer, .app section {
   width: 100%;
   position: fixed; }
-
-header {
-  background: #aaa; }
-
-footer {
-  bottom: 0;
-  height: 2em; }
-
-header {
+.app header {
+  background: #aaa;
   top: 0;
   height: 2em; }
-  header li:first-child {
+  .app header li:first-child {
     float: left; }
-  header li:last-child {
+  .app header li:last-child {
     float: right; }
-
-section {
+.app section {
   top: 0;
   bottom: 0;
   overflow: scroll; }
+.app footer {
+  bottom: 0;
+  height: 2em; }
 
 #container {
   max-width: 1080px;
@@ -480,7 +475,8 @@ section {
   float: left;
   margin: .1em;
   overflow: hidden;
-  position: relative; }
+  position: relative;
+  transition: all .1s; }
   .item p {
     position: absolute; }
   .item h2 {
@@ -494,6 +490,8 @@ section {
     font-size: 5vw; }
   .item .string {
     font-size: 4vw; }
+  .item.flash {
+    background: #FFF; }
 
 .count {
   background: #51c942; }
@@ -523,17 +521,32 @@ input#radio-binary[type=radio]:checked + div.options-binary {
 
 .overlay {
   display: none;
+  flex-direction: column;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(255, 255, 255, 0.85); }
+  background: rgba(255, 255, 255, 0.85);
+  color: #334; }
+  .overlay header {
+    background: rgba(0, 0, 0, 0.65);
+    color: #9CF;
+    padding: .5rem;
+    text-align: right;
+    font-size: 1.2em; }
+  .overlay section {
+    flex: 1; }
+  .overlay footer {
+    background: rgba(0, 0, 0, 0.65);
+    color: rgba(255, 255, 255, 0.35);
+    padding: .5rem;
+    font-size: .85em; }
 
-.overlay-open {
-  display: block; }
-  .overlay-open .app {
-    -webkit-filter: blur(0.2em); }
+.overlay-open .overlay {
+  display: flex; }
+.overlay-open .app {
+  -webkit-filter: blur(0.5em); }
 
 /**
  * Columns in SSGS rely on `box-sizing: border-box;` in order to work properly.

@@ -40,7 +40,7 @@ DESCOPED MOFO
 			 <div id="container">
 
 				<!-- <div class="grid"> -->
-					<div class="item binary" data-value="1" data-type="binary">
+					<div class="item binary" data-value="1" data-type="binary" toggle-overlay="overlay/tile-1">
 						<h2>Did you drink coffee?</h2>
 						<label class="js-display string">Yes</label>
 					</div>
@@ -48,7 +48,7 @@ DESCOPED MOFO
 							<h2>How many cups?</h2>
 							<label class="js-display int">120</label>
 						</div>
-					<div class="item binary" data-value="-1" data-type="binary">
+					<div class="item binary" data-value="-1" data-type="binary" toggle-overlay>
 							<h2>Are you glad you did?</h2>
 							<label class="js-display string">Nope</label>
 						</div>
@@ -56,7 +56,7 @@ DESCOPED MOFO
 						<h2>How many red lights?</h2>
 						<label class="js-display int">7</label>
 					</div>
-					<div class="item rating" data-value="-5" data-type="scale">
+					<div class="item rating" data-value="-5" data-type="scale" toggle-overlay>
 						<h2>How would you rate today?</h2>
 						<label class="js-display int">-5</label>
 					</div>
@@ -72,7 +72,7 @@ DESCOPED MOFO
 
     <div class="overlay">
         <header>
-            <div class="x"><span>&times;</span></div>
+            <div class="x" toggle-overlay><span>&times;</span></div>
         </header>
         <section>
             put tile capture form here

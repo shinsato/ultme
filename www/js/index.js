@@ -58,9 +58,18 @@ $(document).on("pagecreate","#pageone",function(){
 });
 
 $(function(){
+    var $body = $('body');
+    var $overlay = $('.overlay');
     var tileTypeCount = $('[data-type="count"]');
     var tileTypeBinary = $('[data-type="binary"]');
     var tileTypeScale = $('[data-type="scale"]');
+
+    var flashTile = function($element){
+        $element.addClass('flash');
+        setTimeout(function(){
+            $element.removeClass('flash');
+        }, 100);
+    };
 
     tileTypeCount.each(function(index, element){
         var $e = $(element);
@@ -68,9 +77,11 @@ $(function(){
         var $display = $($e.find('.js-display'));
 
         $(element).on('click', function(event){
+            var $me = $(this);
             val += 1;
             $display.text(val)
-            $e.data('value', val);
+            $me.data('value', val);
+            flashTile($me);
         });
     });
 
@@ -80,10 +91,12 @@ $(function(){
         var $display = $($e.find('.js-display'));
 
         $(element).on('click', function(event){
-            val += 1;
-            $display.text(val)
-            $e.data('value', val);
+            console.log(val);
         });
     });
 
+    // overlay handlers
+    $('[toggle-overlay]').on('click', function(){
+        $body.toggleClass('overlay-open');
+    });
 });
