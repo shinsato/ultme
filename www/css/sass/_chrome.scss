@@ -4,7 +4,7 @@ header, footer, section {
 	position: fixed;
 }
 
-header, footer {
+header {
 	background: #aaa;
 }
 
@@ -31,7 +31,7 @@ header {
 
 section {
 	top: 2em;
-	bottom: 2em;
+	bottom: 0;
 	overflow: scroll;
 }
 

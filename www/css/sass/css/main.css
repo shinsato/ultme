@@ -436,7 +436,7 @@ header, footer, section {
   width: 100%;
   position: fixed; }
 
-header, footer {
+header {
   background: #aaa; }
 
 footer {
@@ -453,7 +453,7 @@ header {
 
 section {
   top: 2em;
-  bottom: 2em;
+  bottom: 0;
   overflow: scroll; }
 
 #container {

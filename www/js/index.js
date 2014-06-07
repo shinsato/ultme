@@ -47,3 +47,13 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+    console.log($('div.count'));
+
+$(document).on("pagecreate","#pageone",function(){
+  $("div").on("click",function(){
+    console.log('heeeelp');
+   // $(this).hide();
+  });
+});
+
