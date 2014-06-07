@@ -461,7 +461,7 @@ header {
     float: right; }
 
 section {
-  top: 2em;
+  top: 0;
   bottom: 0;
   overflow: scroll; }
 
