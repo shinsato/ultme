@@ -521,6 +521,7 @@ input#radio-binary[type=radio]:checked + div.options-binary {
 
 .overlay {
   display: none;
+  -webkit-flex-direction: column;
   flex-direction: column;
   position: fixed;
   top: 0;
@@ -544,6 +545,7 @@ input#radio-binary[type=radio]:checked + div.options-binary {
     font-size: .85em; }
 
 .overlay-open .overlay {
+  display: -webkit-flex;
   display: flex; }
 .overlay-open .app {
   -webkit-filter: blur(0.5em); }

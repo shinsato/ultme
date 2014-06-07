@@ -3,6 +3,7 @@
 
 .overlay {
 	display:none;
+	-webkit-flex-direction:column;
 	flex-direction:column;
 	position:fixed;
 	top:0;
@@ -31,6 +32,7 @@
 
 .overlay-open {
 	.overlay {
+		display:-webkit-flex;
 		display:flex;
 	}
 	.app {
