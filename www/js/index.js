@@ -20,6 +20,17 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+        this.initDb();
+
+
+        function testInit(){
+            app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type) VALUES("Did you drink coffee?","binary")')});
+            app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type) VALUES("How many cups?","tally")')});
+            app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type) VALUES("Are you glad you did?","binary")')});
+            app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type) VALUES("How many red lights?","tally")')});
+            app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type,min,max) VALUES("How would you rate today?","scale",-5,5)')});
+        }
+        //testInit();
     },
     // Bind Event Listeners
     //
@@ -27,6 +38,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('documentready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
@@ -34,6 +46,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        this.initDb();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -45,10 +58,16 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    initDb: function(){
+        app.db = window.openDatabase("ultme", "1.0", "Ultimately Me", 1000000);
+        app.db.transaction(setupDB);
     }
 };
-
-console.log($('div.count'));
+    app.initialize();
+    loadTiles(app);
+    //console.log($('div.count'));
 
 $(document).on("pagecreate","#pageone",function(){
   $("div").on("click",function(){
@@ -69,6 +88,10 @@ $(function(){
         setTimeout(function(){
             $element.removeClass('flash');
         }, 100);
+    };
+
+    var toggleOverlay = function(){
+        $body.toggleClass('overlay-open');
     };
 
     tileTypeCount.each(function(index, element){
@@ -95,6 +118,7 @@ $(function(){
         });
     });
 
+
     // overlay handlers
     $(document).on('click', '[toggle-overlay]', function(){
         var path = $(this).attr('toggle-overlay');
@@ -106,6 +130,6 @@ $(function(){
         if(path.length) {
             $overlayBody.load(path + '.html');
         }
-        $body.toggleClass('overlay-open');
+        toggleOverlay();
     });
 });
