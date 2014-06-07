@@ -98,8 +98,13 @@ $(function(){
     // overlay handlers
     $(document).on('click', '[toggle-overlay]', function(){
         var path = $(this).attr('toggle-overlay');
+        var $overlayBody = $overlay.find('section');
+        // clean out overlay content
+        $overlayBody.html('');
+
+        // fill in overlay content
         if(path.length) {
-            $overlay.find('section').load(path + '.html');
+            $overlayBody.load(path + '.html');
         }
         $body.toggleClass('overlay-open');
     });
