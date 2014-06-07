@@ -96,7 +96,7 @@ $(function(){
     });
 
     // overlay handlers
-    $('[toggle-overlay]').on('click', function(){
+    $(document).on('click', '[toggle-overlay]', function(){
         var path = $(this).attr('toggle-overlay');
         if(path.length) {
             $overlay.find('section').load(path + '.html');
