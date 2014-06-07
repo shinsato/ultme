@@ -1,0 +1,16 @@
+.overlay {
+	display:none;
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	background:rgba(#FFF, .85);
+}
+
+.overlay-open {
+	display:block;
+	.app {
+		-webkit-filter:blur(.2em);
+	}
+}

@@ -21,8 +21,8 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-       <div>
-	<header>
+       <div class="app">
+	    <header>
 			<nav>
 				<ul>
 					<li>Account</li>
@@ -44,25 +44,25 @@
 			 <div id="container">
 
 				<!-- <div class="grid"> -->
-					<div class="item binary">
+					<div class="item binary" data-value="1" data-type="binary">
 						<h2>Did you drink coffee?</h2>
-						<label class="string">Yes</label>
+						<label class="js-display string">Yes</label>
 					</div>
-					<div class="item count">
+					<div class="item count" data-value="120" data-type="count">
 							<h2>How many cups?</h2>
-							<label class="int">120</label>
+							<label class="js-display int">120</label>
 						</div>
-					<div class="item binary">
+					<div class="item binary" data-value="-1" data-type="binary">
 							<h2>Are you glad you did?</h2>
-							<label class="string">Nope</label>
+							<label class="js-display string">Nope</label>
 						</div>
-					<div class="item count">
+					<div class="item count" data-value="7" data-type="count">
 						<h2>How many red lights?</h2>
-						<label class="int">7</label>
+						<label class="js-display int">7</label>
 					</div>
-					<div class="item rating">
+					<div class="item rating" data-value="-5" data-type="scale">
 						<h2>How would you rate today?</h2>
-						<label class="int">-5</label>
+						<label class="js-display int">-5</label>
 					</div>
 
 				<!-- </div> -->
@@ -73,6 +73,16 @@
 			<a href="#">Create New Tile</a>
 		 </footer>
 	</div>
+
+    <div class="overlay">
+        <header>
+            <div class="x"><span>&times;</span></div>
+        </header>
+        <section>
+            put tile capture form here
+        </section>
+        <footer>something helpful or not</footer>
+    </div>
 
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>

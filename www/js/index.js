@@ -48,12 +48,42 @@ var app = {
     }
 };
 
-    console.log($('div.count'));
+console.log($('div.count'));
 
 $(document).on("pagecreate","#pageone",function(){
   $("div").on("click",function(){
     console.log('heeeelp');
-   // $(this).hide();
+    // $(this).hide();
   });
 });
 
+$(function(){
+    var tileTypeCount = $('[data-type="count"]');
+    var tileTypeBinary = $('[data-type="binary"]');
+    var tileTypeScale = $('[data-type="scale"]');
+
+    tileTypeCount.each(function(index, element){
+        var $e = $(element);
+        var val = $e.data('value');
+        var $display = $($e.find('.js-display'));
+
+        $(element).on('click', function(event){
+            val += 1;
+            $display.text(val)
+            $e.data('value', val);
+        });
+    });
+
+    tileTypeBinary.each(function(index, element){
+        var $e = $(element);
+        var val = $e.data('value');
+        var $display = $($e.find('.js-display'));
+
+        $(element).on('click', function(event){
+            val += 1;
+            $display.text(val)
+            $e.data('value', val);
+        });
+    });
+
+});
