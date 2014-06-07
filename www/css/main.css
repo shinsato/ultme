@@ -493,10 +493,10 @@ h1, h2, h3, h4, h5 {
   .item.flash {
     background: #FFF; }
 
-.count {
+.tally {
   background: #51c942; }
 
-.rating {
+.scale {
   background: #e47154; }
 
 .binary {
