@@ -97,6 +97,10 @@ $(function(){
 
     // overlay handlers
     $('[toggle-overlay]').on('click', function(){
+        var path = $(this).attr('toggle-overlay');
+        if(path.length) {
+            $overlay.find('section').load(path + '.html');
+        }
         $body.toggleClass('overlay-open');
     });
 });
