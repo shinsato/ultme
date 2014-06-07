@@ -71,6 +71,10 @@ $(function(){
         }, 100);
     };
 
+    var toggleOverlay = function(){
+        $body.toggleClass('overlay-open');
+    };
+
     tileTypeCount.each(function(index, element){
         var $e = $(element);
         var val = $e.data('value');
@@ -95,6 +99,7 @@ $(function(){
         });
     });
 
+
     // overlay handlers
     $(document).on('click', '[toggle-overlay]', function(){
         var path = $(this).attr('toggle-overlay');
@@ -106,6 +111,6 @@ $(function(){
         if(path.length) {
             $overlayBody.load(path + '.html');
         }
-        $body.toggleClass('overlay-open');
+        toggleOverlay();
     });
 });
