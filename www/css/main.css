@@ -513,12 +513,6 @@ h1, h2, h3, h4, h5 {
       font-size: 12vw; }
     .item .string {
       font-size: 12vw; } }
-input#radio-binary[type=radio] + div.options-binary {
-  display: none; }
-
-input#radio-binary[type=radio]:checked + div.options-binary {
-  display: inline; }
-
 .overlay {
   display: none;
   flex-direction: column;
