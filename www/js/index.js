@@ -183,6 +183,7 @@ function loadTiles(app){
                     tiles.push(results.rows.item(i));
                 }
                 console.log(tiles);
+                $('#container').empty();
                 for(t in tiles){
                     var type = tiles[t].type;
                     var tile = $('<div class="item ' + type + '"></div>');
