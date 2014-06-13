@@ -112,7 +112,7 @@ function init(){
         $(element).on('click', function(event){
             var $me = $(this);
             val += 1;
-            $display.text(val)
+            $display.text(val);
             $me.attr('data-value', val);
             $me.data('value', val);
             flashTile($me);
