@@ -4,21 +4,20 @@
 .overlay {
 	display: none;
 	header {
-		background: rgba($bg-color,.65);
 		padding: .5rem;
 		text-align: right;
 		font-size: 1.2em;
 	}
 	section {
-		background: rgba($new-c, .85);
+		background: rgba($new-c, .5);
 	}
 	footer {
-		background: rgba($bg-color,.65);
 		padding: .5rem;
 		font-size: .85em;
 	}
 	&.new {
-		background: $bg-color;
+		background: $new-c;
+		color:$bg-color;
 	}
 	&.binary {
 		background: $binary-c;

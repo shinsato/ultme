@@ -514,6 +514,14 @@ h1, h2, h3, h4, h5 {
   background: #ececed;
   color: rgba(29, 31, 33, 0.65); }
 
+.edit-cue {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: .5rem; }
+  .edit-cue:hover {
+    background: rgba(255, 255, 255, 0.15); }
+
 @media all and (max-width: 1020px) {
   .item {
     width: 50%;
@@ -528,18 +536,17 @@ h1, h2, h3, h4, h5 {
 .overlay {
   display: none; }
   .overlay header {
-    background: rgba(29, 31, 33, 0.65);
     padding: .5rem;
     text-align: right;
     font-size: 1.2em; }
   .overlay section {
-    background: rgba(236, 236, 237, 0.85); }
+    background: rgba(236, 236, 237, 0.5); }
   .overlay footer {
-    background: rgba(29, 31, 33, 0.65);
     padding: .5rem;
     font-size: .85em; }
   .overlay.new {
-    background: #1d1f21; }
+    background: #ececed;
+    color: #1d1f21; }
   .overlay.binary {
     background: #3e7ed9; }
   .overlay.tally {

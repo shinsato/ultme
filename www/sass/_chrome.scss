@@ -92,6 +92,15 @@
 	background: $new-c;
 	color:rgba($bg-color,.65);
 }
+.edit-cue {
+	position:absolute;
+	right:0;
+	bottom:0;
+	padding:.5rem;
+	&:hover {
+		background:rgba(#FFF, .15);
+	}
+}
 
 
 
