@@ -553,8 +553,6 @@ h1, h2, h3, h4, h5 {
 .overlay-open .overlay {
   display: -webkit-flex;
   display: flex; }
-.overlay-open .app {
-  -webkit-filter: blur(0.5em); }
 
 /**
  * Columns in SSGS rely on `box-sizing: border-box;` in order to work properly.
