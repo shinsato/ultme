@@ -76,7 +76,31 @@ $(document).on("pagecreate","#pageone",function(){
   });
 }).on('submit','#update-tile',function(){
     var self = $(this);
-    console.log(self.serialize());
+    var tile = [];
+    $.each(self.serializeArray(), function(_, kv) {
+        tile[kv.name] = kv.value;
+    });
+
+    if(tile['tile-id'] > 0){//Update
+        //nothing to see here
+    } else {//Insert
+        new Date().getTime();
+        time = Date.now();
+        option = {
+                    'label-a':tile['label-a'],
+                    'label-b':tile['label-b'],
+                    'timebox':tile['tile-timebox']}
+        app.db.transaction(function(tx){
+            tx.executeSql('INSERT INTO tile (name,type,options,created,modified) VALUES(?,?,?,?,?)',[tile['tile-name'],tile['tile-type'],JSON.stringify(option),time,time],function(tx,results){
+                    console.log(tx,results);
+                    loadTiles(app);
+                    $('body').toggleClass('overlay-open');
+            })
+        });
+    }
+
+
+    return false;
 });
 
 
