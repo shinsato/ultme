@@ -521,13 +521,17 @@ h1, h2, h3, h4, h5 {
   background: #ececed;
   color: rgba(29, 31, 33, 0.65); }
 
-.edit-cue {
+.tile-actions {
   position: absolute;
   right: 0;
   bottom: 0;
-  padding: .5rem; }
-  .edit-cue:hover {
-    background: rgba(255, 255, 255, 0.15); }
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row; }
+  .tile-actions div {
+    padding: .5rem; }
+    .tile-actions div:hover {
+      background: rgba(255, 255, 255, 0.15); }
 
 @media all and (max-width: 1020px) {
   .item {

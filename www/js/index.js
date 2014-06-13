@@ -237,6 +237,7 @@ function loadTiles(app){
                     var type = tiles[t].type;
                     var rowid = tiles[t].rowid;
                     var tile = $('<div class="item ' + type + '"></div>');
+                    var tileActions = $('<div class="tile-actions"></div>');
                     tile.attr('data-value', 0);
                     tile.attr('data-type', type);
                     tile.attr('data-rowid', rowid);
@@ -245,17 +246,23 @@ function loadTiles(app){
                     tile.append('<h2>' + tiles[t].name + '</h2>');
                     switch(type) {
                         case 'binary':
+                            tileActions.append('<div class="report-cue" data-type="binary" toggle-overlay="overlay/tile-log">&#9776;</div>');
+                            tileActions.append('<div class="edit-cue" data-type="binary" toggle-overlay="overlay/edit">\u2B21</div>');
                             tile.append('<label class="js-display string">0</label>');
-                            tile.append('<div class="edit-cue" data-type="binary" toggle-overlay="overlay/edit">&vellip;</div>');
+                            tile.append(tileActions);
                             tile.attr('toggle-overlay', 'overlay/tile-binary');
                             break;
                         case 'tally':
+                            tileActions.append('<div class="report-cue" data-type="tally" toggle-overlay="overlay/tile-log">&#9776;</div>');
+                            tileActions.append('<div class="edit-cue" data-type="tally" toggle-overlay="overlay/edit">\u2B21</div>');
                             tile.append('<label class="js-display string">0</label>');
-                            tile.append('<div class="edit-cue" data-type="tally" toggle-overlay="overlay/edit">&vellip;</div>');
+                            tile.append(tileActions);
                             break;
                         case 'scale':
+                            tileActions.append('<div class="report-cue" data-type="scale" toggle-overlay="overlay/tile-log">&#9776;</div>');
+                            tileActions.append('<div class="edit-cue" data-type="scale" toggle-overlay="overlay/edit">\u2B21</div>');
                             tile.append('<label class="js-display string">0</label>');
-                            tile.append('<div class="edit-cue" data-type="scale" toggle-overlay="overlay/edit">&vellip;</div>');
+                            tile.append(tileActions);
                             tile.attr('toggle-overlay', 'overlay/tile-scale');
                             break;
                     }
