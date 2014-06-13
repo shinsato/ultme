@@ -61,6 +61,8 @@
 	position: relative;
 	box-shadow: -1px -1px 0 0 rgba(0,0,0,.35) inset;
 	transition:all .1s;
+	@include user-select(none);
+
 	p { position: absolute; }
 
 	h2 {
@@ -91,6 +93,15 @@
 .new {
 	background: $new-c;
 	color:rgba($bg-color,.65);
+}
+.edit-cue {
+	position:absolute;
+	right:0;
+	bottom:0;
+	padding:.5rem;
+	&:hover {
+		background:rgba(#FFF, .15);
+	}
 }
 
 

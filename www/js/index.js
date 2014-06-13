@@ -158,10 +158,12 @@ function init(){
 
 
     // overlay handlers
-    $(document).on('click', '[toggle-overlay]', function(){
+    $(document).on('click', '[toggle-overlay]', function($event){
+        $event.stopPropagation();
         var path = $(this).attr('toggle-overlay');
         var type = $(this).data('type');
-        var $overlayBody = $overlay.find('section');
+        var $overlayBody = $overlay.find('.overlay-body');
+
         // clean out overlay content
         $overlay.removeClass('binary tally scale new').addClass(type);
         $overlayBody.html('');
@@ -227,6 +229,7 @@ function loadTiles(app){
                     tiles.push(results.rows.item(i));
                 }
                 console.log(tiles);
+                $('#container').empty();
                 for(t in tiles){
                     var type = tiles[t].type;
                     var rowid = tiles[t].rowid;
@@ -240,13 +243,16 @@ function loadTiles(app){
                     switch(type) {
                         case 'binary':
                             tile.append('<label class="js-display string">0</label>');
+                            tile.append('<div class="edit-cue" data-type="binary" toggle-overlay="overlay/edit">&vellip;</div>');
                             tile.attr('toggle-overlay', 'overlay/tile-binary');
                             break;
                         case 'tally':
                             tile.append('<label class="js-display string">0</label>');
+                            tile.append('<div class="edit-cue" data-type="tally" toggle-overlay="overlay/edit">&vellip;</div>');
                             break;
                         case 'scale':
                             tile.append('<label class="js-display string">0</label>');
+                            tile.append('<div class="edit-cue" data-type="scale" toggle-overlay="overlay/edit">&vellip;</div>');
                             tile.attr('toggle-overlay', 'overlay/tile-scale');
                             break;
                     }
