@@ -182,6 +182,9 @@ function saveTallyResponse(app,rowid){
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             __saveTallyResponse(app,rowid,latitude,longitude);
+        },
+        function(){
+            __saveTallyResponse(app,rowid,null,null);
         });
     } else{
         __saveTallyResponse(app,rowid,null,null);
