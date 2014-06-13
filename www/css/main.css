@@ -435,7 +435,7 @@ table {
 body {
   font-family: helvetica neue, helvetica, arial, san-serif;
   color: #FFFFFF;
-  background-color: #ebebeb;
+  background-color: #1d1f21;
   text-align: center; }
 
 h1, h2, h3, h4, h5 {
@@ -458,24 +458,32 @@ h1, h2, h3, h4, h5 {
   overflow: scroll; }
 .app footer {
   bottom: 0;
-  height: 2em; }
+  padding: .5em;
+  font-size: .85em;
+  background: rgba(29, 31, 33, 0.85);
+  color: #ececed; }
+  .app footer a {
+    display: block;
+    padding: .5em;
+    margin: -.5em; }
+.app a {
+  text-decoration: none;
+  color: inherit; }
 
 #container {
-  max-width: 1080px;
   margin: 0 auto;
   overflow: auto;
-  padding: .1em;
   overflow: hidden; }
 
 .item {
-  width: 33%;
+  width: 33.333%;
   height: 0;
-  padding-bottom: 33%;
+  padding-bottom: 33.333%;
   display: block;
   float: left;
-  margin: .1em;
   overflow: hidden;
   position: relative;
+  box-shadow: -1px -1px 0 0 rgba(0, 0, 0, 0.35) inset;
   transition: all .1s; }
   .item p {
     position: absolute; }
@@ -491,21 +499,25 @@ h1, h2, h3, h4, h5 {
   .item .string {
     font-size: 4vw; }
   .item.flash {
-    background: #FFF; }
+    background: #ececed; }
 
 .tally {
-  background: #51c942; }
+  background: #66d9ef; }
 
 .scale {
-  background: #e47154; }
+  background: #ae81ff; }
 
 .binary {
-  background: #80cada; }
+  background: #3e7ed9; }
+
+.new {
+  background: #ececed;
+  color: rgba(29, 31, 33, 0.65); }
 
 @media all and (max-width: 1020px) {
   .item {
-    width: 49%;
-    padding-bottom: 49%; }
+    width: 50%;
+    padding-bottom: 50%; }
     .item h2 {
       font-size: 7vw;
       margin: .4em .2em .4em; }
@@ -522,10 +534,10 @@ h1, h2, h3, h4, h5 {
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(236, 236, 237, 0.85);
   color: #334; }
   .overlay header {
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(29, 31, 33, 0.85);
     color: #9CF;
     padding: .5rem;
     text-align: right;
@@ -533,7 +545,7 @@ h1, h2, h3, h4, h5 {
   .overlay section {
     flex: 1; }
   .overlay footer {
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(29, 31, 33, 0.85);
     color: rgba(255, 255, 255, 0.35);
     padding: .5rem;
     font-size: .85em; }

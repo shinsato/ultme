@@ -10,10 +10,10 @@
 	right:0;
 	bottom:0;
 	left:0;
-	background:rgba(#FFF, .85);
+	background:rgba($new-c, .85);
 	color:#334;
 	header {
-		background:rgba(#000,.65);
+		background:rgba($bg-color,.85);
 		color:#9CF;
 		padding:.5rem;
 		text-align:right;
@@ -23,7 +23,7 @@
 		flex:1;
 	}
 	footer {
-		background:rgba(#000,.65);
+		background:rgba($bg-color,.85);
 		color:rgba(#FFF,.35);
 		padding:.5rem;
 		font-size:.85em;
