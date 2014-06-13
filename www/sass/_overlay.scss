@@ -1,4 +1,5 @@
 @import "tile-new";
+@import "tile-log";
 
 // OVERLAY UI
 .overlay {
@@ -51,15 +52,11 @@
 	bottom:0;
 	left:0;
 	.overlay-body {
-		display:-webkit-flex;
-		display:flex;
 		position:relative;
-		-webkit-flex-direction: column;
-		flex-direction: column;
+		@include flex-column();
 		height:100%;
 		section {
-			-webkit-flex: 1;
-			flex: 1;
+			@include flex-item(1);
 		}
 	}
 }

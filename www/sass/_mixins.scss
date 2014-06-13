@@ -7,3 +7,22 @@
     -o-user-select: $select;
     user-select: $select;
 }
+
+@mixin flex-row() {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+@mixin flex-column() {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+@mixin flex-item($flex) {
+    -webkit-flex: $flex;
+    flex: $flex;
+}

@@ -2,20 +2,31 @@ ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-
+	@include flex-column();
 	li {
-		display: block;
-		width: 100%;
-		padding: 1em;
-		}
+		//display: block;
+		//width: 100%;
+		@include flex-row();
+		box-shadow:0 1px 0 0 $fg-color;
 
 		aside {
-			float: left;
+			//float: left;
 			// @include transform(rotate(90deg));
+			position:relative;
+			padding: 1rem;
 			font-size: 2vw;
 			text-align: center;
+			box-shadow:1px 0 0 0 $fg-color;
+			span {
+				display: block;
+				-webkit-transform: rotate(-90deg);
+				transform: rotate(-90deg);
 			}
+		}
 		h2 {
+			@include flex-item(1);
+			padding: 1rem;
 			font-size: 7vw;
 		}
 	}
+}

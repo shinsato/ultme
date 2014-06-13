@@ -98,14 +98,12 @@
 	position:absolute;
 	right:0;
 	bottom:0;
-	display:-webkit-flex;
-	display:flex;
-	-webkit-flex-direction:row;
-	flex-direction:row;
+	@include flex-row();
 	div {
-		padding:.5rem;
+		padding: .5rem;
+		line-height: 1;
 		&:hover {
-			background:rgba(#FFF, .15);
+			background: rgba(#FFF, .15);
 		}
 	}
 }

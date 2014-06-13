@@ -530,7 +530,8 @@ h1, h2, h3, h4, h5 {
   -webkit-flex-direction: row;
   flex-direction: row; }
   .tile-actions div {
-    padding: .5rem; }
+    padding: .5rem;
+    line-height: 1; }
     .tile-actions div:hover {
       background: rgba(255, 255, 255, 0.15); }
 
@@ -545,6 +546,36 @@ h1, h2, h3, h4, h5 {
       font-size: 12vw; }
     .item .string {
       font-size: 12vw; } }
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column; }
+  ul li {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-shadow: 0 1px 0 0 #ececed; }
+    ul li aside {
+      position: relative;
+      padding: 1rem;
+      font-size: 2vw;
+      text-align: center;
+      box-shadow: 1px 0 0 0 #ececed; }
+      ul li aside span {
+        display: block;
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg); }
+    ul li h2 {
+      -webkit-flex: 1;
+      flex: 1;
+      padding: 1rem;
+      font-size: 7vw; }
+
 .overlay {
   display: none; }
   .overlay header {
@@ -584,9 +615,9 @@ h1, h2, h3, h4, h5 {
   bottom: 0;
   left: 0; }
   .overlay .overlay-body {
+    position: relative;
     display: -webkit-flex;
     display: flex;
-    position: relative;
     -webkit-flex-direction: column;
     flex-direction: column;
     height: 100%; }
