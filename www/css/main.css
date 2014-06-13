@@ -454,7 +454,7 @@ h1, h2, h3, h4, h5 {
     float: right; }
 .app section {
   top: 0;
-  bottom: 0;
+  bottom: 2em;
   overflow: scroll; }
 .app footer {
   bottom: 0;
@@ -525,6 +525,7 @@ h1, h2, h3, h4, h5 {
   position: absolute;
   right: 0;
   bottom: 0;
+  display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
   flex-direction: row; }
@@ -583,6 +584,7 @@ h1, h2, h3, h4, h5 {
   bottom: 0;
   left: 0; }
   .overlay .overlay-body {
+    display: -webkit-flex;
     display: flex;
     position: relative;
     -webkit-flex-direction: column;
