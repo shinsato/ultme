@@ -159,7 +159,7 @@ function init(){
         $event.stopPropagation();
         var path = $(this).attr('toggle-overlay');
         var type = $(this).data('type');
-        var $overlayBody = $overlay.find('section');
+        var $overlayBody = $overlay.find('.overlay-body');
 
         // clean out overlay content
         $overlay.removeClass('binary tally scale new').addClass(type);

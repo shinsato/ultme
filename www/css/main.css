@@ -502,10 +502,10 @@ h1, h2, h3, h4, h5 {
     background: #ececed; }
 
 .tally {
-  background: #66d9ef; }
+  background: #06aef1; }
 
 .scale {
-  background: #ae81ff; }
+  background: #9e71df; }
 
 .binary {
   background: #3e7ed9; }
@@ -537,38 +537,52 @@ h1, h2, h3, h4, h5 {
   display: none; }
   .overlay header {
     padding: .5rem;
-    text-align: right;
+    text-align: left;
     font-size: 1.2em; }
   .overlay section {
     background: rgba(236, 236, 237, 0.5); }
   .overlay footer {
     padding: .5rem;
     font-size: .85em; }
+  .overlay .x {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: .5rem;
+    color: #ececed;
+    cursor: pointer; }
   .overlay.new {
     background: #ececed;
     color: #1d1f21; }
+    .overlay.new header,
+    .overlay.new footer {
+      background: rgba(29, 31, 33, 0.85);
+      color: #ececed; }
   .overlay.binary {
     background: #3e7ed9; }
   .overlay.tally {
-    background: #66d9ef; }
+    background: #06aef1; }
   .overlay.scale {
-    background: #ae81ff; }
+    background: #9e71df; }
 
 .overlay {
-  -webkit-flex-direction: column;
-  flex-direction: column;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
-  .overlay section {
-    -webkit-flex: 1;
-    flex: 1; }
+  .overlay .overlay-body {
+    display: flex;
+    position: relative;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    height: 100%; }
+    .overlay .overlay-body section {
+      -webkit-flex: 1;
+      flex: 1; }
 
 .overlay-open .overlay {
-  display: -webkit-flex;
-  display: flex; }
+  display: block; }
 
 /**
  * Columns in SSGS rely on `box-sizing: border-box;` in order to work properly.
