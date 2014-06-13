@@ -549,6 +549,26 @@ h1, h2, h3, h4, h5 {
     color: rgba(255, 255, 255, 0.35);
     padding: .5rem;
     font-size: .85em; }
+  .overlay.new {
+    background: #ececed; }
+    .overlay.new header,
+    .overlay.new footer {
+      background: #1d1f21; }
+  .overlay.binary {
+    background: #bed3f2; }
+    .overlay.binary header,
+    .overlay.binary footer {
+      background: #3e7ed9; }
+  .overlay.tally {
+    background: #f1fbfd; }
+    .overlay.tally header,
+    .overlay.tally footer {
+      background: #66d9ef; }
+  .overlay.scale {
+    background: #cfb4ff; }
+    .overlay.scale header,
+    .overlay.scale footer {
+      background: #ae81ff; }
 
 .overlay-open .overlay {
   display: -webkit-flex;
