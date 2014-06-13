@@ -1,8 +1,38 @@
 @import "tile-new";
 
-
+// OVERLAY UI
 .overlay {
-	display:none;
+	display: none;
+	header {
+		background: rgba($bg-color,.65);
+		padding: .5rem;
+		text-align: right;
+		font-size: 1.2em;
+	}
+	section {
+		background: rgba($new-c, .85);
+	}
+	footer {
+		background: rgba($bg-color,.65);
+		padding: .5rem;
+		font-size: .85em;
+	}
+	&.new {
+		background: $bg-color;
+	}
+	&.binary {
+		background: $binary-c;
+	}
+	&.tally {
+		background: $tally-c;
+	}
+	&.scale {
+		background: $scale-c;
+	}
+}
+
+// FLEX LAYOUT CONTROLS
+.overlay {
 	-webkit-flex-direction:column;
 	flex-direction:column;
 	position:fixed;
@@ -10,23 +40,9 @@
 	right:0;
 	bottom:0;
 	left:0;
-	background:rgba($new-c, .85);
-	color:#334;
-	header {
-		background:rgba($bg-color,.85);
-		color:#9CF;
-		padding:.5rem;
-		text-align:right;
-		font-size:1.2em;
-	}
 	section {
+		-webkit-flex:1;
 		flex:1;
-	}
-	footer {
-		background:rgba($bg-color,.85);
-		color:rgba(#FFF,.35);
-		padding:.5rem;
-		font-size:.85em;
 	}
 }
 
@@ -36,6 +52,6 @@
 		display:flex;
 	}
 	.app {
-		-webkit-filter:blur(.5em);
+		// -webkit-filter:blur(1.5em);
 	}
 }

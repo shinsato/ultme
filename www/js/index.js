@@ -136,7 +136,7 @@ function init(){
         $(element).on('click', function(event){
             var $me = $(this);
             val += 1;
-            $display.text(val)
+            $display.text(val);
             $me.attr('data-value', val);
             $me.data('value', val);
             flashTile($me);
@@ -157,8 +157,10 @@ function init(){
     // overlay handlers
     $(document).on('click', '[toggle-overlay]', function(){
         var path = $(this).attr('toggle-overlay');
+        var type = $(this).data('type');
         var $overlayBody = $overlay.find('section');
         // clean out overlay content
+        $overlay.removeClass('binary tally scale new').addClass(type);
         $overlayBody.html('');
 
         // fill in overlay content
@@ -214,4 +216,3 @@ function loadTiles(app){
 //function queryDB(tx, sql, params, successCB, errorCB) {
 //    tx.executeSql(sql, params, successCB, errorCB);
 //}
-
