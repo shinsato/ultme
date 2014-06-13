@@ -103,6 +103,11 @@ $(document).on("pagecreate","#pageone",function(){
     return false;
 });
 
+//==============================================================================
+//==============================================================================
+// DATABASE SETUP
+//==============================================================================
+//==============================================================================
 
 function setupDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_list TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
@@ -135,12 +140,10 @@ function init(){
 
         $(element).on('click', function(event){
             var $me = $(this);
-            val += 1;
-            $display.text(val);
-            $me.attr('data-value', val);
-            $me.data('value', val);
+            saveTallyResponse(app,$me.data('rowid'));
             flashTile($me);
         });
+        updateTallyCount(app,$e.data('rowid'));
     });
 
     tileTypeBinary.each(function(index, element){
@@ -150,7 +153,7 @@ function init(){
 
         $(element).on('click', function(event){
             console.log(val);
-        });
+        });console.log($e.data('rowid'));
     });
 
 
@@ -171,10 +174,53 @@ function init(){
     });
 }
 
+function saveTallyResponse(app,rowid){
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position){
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            __saveTallyResponse(app,rowid,latitude,longitude);
+        });
+    } else{
+        __saveTallyResponse(app,rowid,null,null);
+    }
+}
+
+function __saveTallyResponse(app,rowid,latitude,longitude){
+    new Date().getTime();
+    time = Date.now();
+    var geo = '';
+    if(latitude && longitude){
+        geo = latitude + ',' + longitude;
+    }
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('INSERT INTO response (tile_id,value,geolocation,created) VALUES (?,?,?,?)', [rowid,1,geo,time], function(tx,results){
+                updateTallyCount(app,rowid);
+        });
+    });
+}
+
+function updateTallyCount(app,rowid){
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('SELECT sum(value) as total FROM response WHERE tile_id = ?', [rowid], function(tx,results){
+                console.log(rowid,results.rows.item(0),tx);
+                var val = results.rows.item(0).total;
+                val = val > 0 ? val : 0;
+                var $tile = $("[data-rowid='" + rowid +"']");
+                var $display = $($tile.find('.js-display'));
+                $display.text(val);
+                $tile.attr('data-value', val);
+                $tile.data('value', val);
+        });
+    });
+}
+
 function loadTiles(app){
     var tiles = [];
     app.db.transaction(
-        function(tx){tx.executeSql('SELECT * FROM tile', [],
+        function(tx){tx.executeSql('SELECT *,rowid FROM tile', [],
             function(tx,results){
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
@@ -183,9 +229,11 @@ function loadTiles(app){
                 console.log(tiles);
                 for(t in tiles){
                     var type = tiles[t].type;
+                    var rowid = tiles[t].rowid;
                     var tile = $('<div class="item ' + type + '"></div>');
                     tile.attr('data-value', 0);
                     tile.attr('data-type', type);
+                    tile.attr('data-rowid', rowid);
                     tile.data('value', 0);
                     tile.data('type', type);
                     tile.append('<h2>' + tiles[t].name + '</h2>');
