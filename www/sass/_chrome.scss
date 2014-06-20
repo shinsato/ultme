@@ -1,4 +1,8 @@
 .app {
+	position: relative;
+	z-index: 1;
+	-webkit-transition: all .5s;
+	transition: all .5s;
 	header, footer, section {
 		width: 100%;
 		position: fixed;
@@ -22,6 +26,7 @@
 		top: 0;
 		bottom: 2em; // account for footer bar
 		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
 	}
 
 	footer {
@@ -45,7 +50,6 @@
 #container {
 	//max-width: 1080px;
 	margin: 0 auto;
-	overflow: auto;
 	//padding: .1em;
 	overflow: hidden;
 	}

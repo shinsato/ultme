@@ -434,45 +434,50 @@ table {
 
 body {
   font-family: helvetica neue, helvetica, arial, san-serif;
-  color: #ececed;
+  color: #e9ecef;
   background-color: #1d1f21;
   text-align: center; }
 
 h1, h2, h3, h4, h5 {
   font-weight: lighter; }
 
-.app header, .app footer, .app section {
-  width: 100%;
-  position: fixed; }
-.app header {
-  background: #aaa;
-  top: 0;
-  height: 2em; }
-  .app header li:first-child {
-    float: left; }
-  .app header li:last-child {
-    float: right; }
-.app section {
-  top: 0;
-  bottom: 2em;
-  overflow: scroll; }
-.app footer {
-  bottom: 0;
-  padding: .5em;
-  font-size: .85em;
-  background: rgba(29, 31, 33, 0.85);
-  color: #ececed; }
-  .app footer a {
-    display: block;
+.app {
+  position: relative;
+  z-index: 1;
+  -webkit-transition: all .5s;
+  transition: all .5s; }
+  .app header, .app footer, .app section {
+    width: 100%;
+    position: fixed; }
+  .app header {
+    background: #aaa;
+    top: 0;
+    height: 2em; }
+    .app header li:first-child {
+      float: left; }
+    .app header li:last-child {
+      float: right; }
+  .app section {
+    top: 0;
+    bottom: 2em;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch; }
+  .app footer {
+    bottom: 0;
     padding: .5em;
-    margin: -.5em; }
-.app a {
-  text-decoration: none;
-  color: inherit; }
+    font-size: .85em;
+    background: rgba(29, 31, 33, 0.85);
+    color: #ebeced; }
+    .app footer a {
+      display: block;
+      padding: .5em;
+      margin: -.5em; }
+  .app a {
+    text-decoration: none;
+    color: inherit; }
 
 #container {
   margin: 0 auto;
-  overflow: auto;
   overflow: hidden; }
 
 .item {
@@ -506,7 +511,7 @@ h1, h2, h3, h4, h5 {
   .item .string {
     font-size: 4vw; }
   .item.flash {
-    background: #ececed; }
+    background: #ebeced; }
 
 .tally {
   background: #06aef1; }
@@ -518,7 +523,7 @@ h1, h2, h3, h4, h5 {
   background: #3e7ed9; }
 
 .new {
-  background: #ececed;
+  background: #ebeced;
   color: rgba(29, 31, 33, 0.65); }
 
 .tile-actions {
@@ -546,6 +551,37 @@ h1, h2, h3, h4, h5 {
       font-size: 12vw; }
     .item .string {
       font-size: 12vw; } }
+form {
+  display: block;
+  padding: 1rem; }
+
+.button-bar {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  margin-bottom: 1em; }
+  .button-bar label {
+    display: block;
+    -webkit-flex: 1;
+    flex: 1;
+    position: relative; }
+    .button-bar label:first-of-type span {
+      border-radius: .2em 0 0 .2em; }
+    .button-bar label:last-of-type span {
+      border-radius: 0 .2em .2em 0; }
+    .button-bar label span {
+      display: block;
+      border: 1px solid #000;
+      padding: .5em 0;
+      white-space: nowrap; }
+    .button-bar label input {
+      position: absolute;
+      opacity: 0; }
+      .button-bar label input:checked + span {
+        background: #1d1f21;
+        color: #ebeced; }
+
 ul {
   list-style: none;
   padding: 0;
@@ -559,13 +595,13 @@ ul {
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row;
-    box-shadow: 0 1px 0 0 #ececed; }
+    box-shadow: 0 1px 0 0 #e9ecef; }
     ul li aside {
       position: relative;
       padding: 1rem;
       font-size: 2vw;
       text-align: center;
-      box-shadow: 1px 0 0 0 #ececed; }
+      box-shadow: 1px 0 0 0 #e9ecef; }
       ul li aside span {
         display: block;
         -webkit-transform: rotate(-90deg);
@@ -577,30 +613,31 @@ ul {
       font-size: 7vw; }
 
 .overlay {
-  display: none; }
+  background: #ebeced;
+  color: #1d1f21; }
   .overlay header {
     padding: .5rem;
     text-align: left;
-    font-size: 1.2em; }
+    font-size: 1.2em;
+    background: rgba(29, 31, 33, 0.65);
+    color: #ebeced; }
   .overlay section {
-    background: rgba(236, 236, 237, 0.5); }
+    background: rgba(235, 236, 237, 0.5); }
   .overlay footer {
     padding: .5rem;
-    font-size: .85em; }
+    font-size: .85em;
+    background: rgba(29, 31, 33, 0.65);
+    color: #ebeced; }
   .overlay .x {
     position: absolute;
     top: 0;
     right: 0;
     padding: .5rem;
-    color: #ececed;
+    color: #ebeced;
     cursor: pointer; }
   .overlay.new {
-    background: #ececed;
+    background: #ebeced;
     color: #1d1f21; }
-    .overlay.new header,
-    .overlay.new footer {
-      background: rgba(29, 31, 33, 0.85);
-      color: #ececed; }
   .overlay.binary {
     background: #3e7ed9; }
   .overlay.tally {
@@ -611,9 +648,14 @@ ul {
 .overlay {
   position: fixed;
   top: 0;
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
   right: 0;
   bottom: 0;
-  left: 0; }
+  left: 0;
+  z-index: 2;
+  -webkit-transition: all .5s;
+  transition: all .5s; }
   .overlay .overlay-body {
     position: relative;
     display: -webkit-flex;
@@ -623,10 +665,18 @@ ul {
     height: 100%; }
     .overlay .overlay-body section {
       -webkit-flex: 1;
-      flex: 1; }
+      flex: 1;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch; }
 
 .overlay-open .overlay {
-  display: block; }
+  -webkit-transform: translateY(0%);
+  transform: translateY(0%); }
+.overlay-open .app {
+  opacity: .3;
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+  -webkit-transform-origin: center center; }
 
 /**
  * Columns in SSGS rely on `box-sizing: border-box;` in order to work properly.
