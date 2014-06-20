@@ -22,7 +22,6 @@ var app = {
         this.bindEvents();
         this.initDb();
 
-
         function testInit(){
             app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type) VALUES("Did you drink coffee?","binary")')});
             app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type) VALUES("How many cups?","tally")')});
@@ -30,7 +29,13 @@ var app = {
             app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type) VALUES("How many red lights?","tally")')});
             app.db.transaction(function(tx){tx.executeSql('INSERT INTO tile (name,type,min,max) VALUES("How would you rate today?","scale",-5,5)')});
         }
+        function resetDb(){
+            app.db.transaction(function(tx){tx.executeSql('DROP TABLE user');});
+            app.db.transaction(function(tx){tx.executeSql('DROP TABLE tile');});
+            app.db.transaction(function(tx){tx.executeSql('DROP TABLE response');});
+        }
         //testInit();
+        //resetDb();
     },
     // Bind Event Listeners
     //
@@ -63,15 +68,33 @@ var app = {
     initDb: function(){
         app.db = window.openDatabase("ultme", "1.0", "Ultimately Me", 1000000);
         app.db.transaction(setupDB);
+        this.createUserIfNotExists();
+    },
+
+    createUserIfNotExists: function(){
+        app.db.transaction(function(tx){
+            tx.executeSql('SELECT *,rowid FROM user', [], function(tx,results){
+                var len = results.rows.length;
+                if(len > 0){
+                    app.userid = results.rows.item(0).rowid;
+                } else {
+                    app.db.transaction(function(tx){
+                        new Date().getTime();
+                        time = Date.now();
+                        tx.executeSql('INSERT INTO user (created) VALUES(?)',[time], function(tx,results){
+                            app.userid = results.insertId;
+                        });
+                    });
+                }
+            });
+        });
     }
 };
     app.initialize();
     loadTiles(app);
-    //console.log($('div.count'));
 
 $(document).on("pagecreate","#pageone",function(){
   $("div").on("click",function(){
-    console.log('heeeelp');
     // $(this).hide();
   });
 }).on('submit','#update-tile',function(){
@@ -89,13 +112,12 @@ $(document).on("pagecreate","#pageone",function(){
         option = {
                     'label-a':tile['label-a'],
                     'label-b':tile['label-b'],
-                    'timebox':tile['tile-timebox']}
+                    'timebox':tile['tile-timebox']};
         app.db.transaction(function(tx){
-            tx.executeSql('INSERT INTO tile (name,type,options,created,modified) VALUES(?,?,?,?,?)',[tile['tile-name'],tile['tile-type'],JSON.stringify(option),time,time],function(tx,results){
-                    console.log(tx,results);
+            tx.executeSql('INSERT INTO tile (name,user_id,type,options,created,modified) VALUES(?,?,?,?,?,?)',[tile['tile-name'],app.userid,tile['tile-type'],JSON.stringify(option),time,time],function(tx,results){
                     loadTiles(app);
                     $('body').toggleClass('overlay-open');
-            })
+            });
         });
     }
 
@@ -152,8 +174,8 @@ function init(){
         var $display = $($e.find('.js-display'));
 
         $(element).on('click', function(event){
-            console.log(val);
-        });console.log($e.data('rowid'));
+            
+        });
     });
 
 
@@ -200,7 +222,7 @@ function __saveTallyResponse(app,rowid,latitude,longitude){
     }
     app.db.transaction(
         function(tx){
-            tx.executeSql('INSERT INTO response (tile_id,value,geolocation,created) VALUES (?,?,?,?)', [rowid,1,geo,time], function(tx,results){
+            tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,1,geo,time], function(tx,results){
                 updateTallyCount(app,rowid);
         });
     });
@@ -210,7 +232,6 @@ function updateTallyCount(app,rowid){
     app.db.transaction(
         function(tx){
             tx.executeSql('SELECT sum(value) as total FROM response WHERE tile_id = ?', [rowid], function(tx,results){
-                console.log(rowid,results.rows.item(0),tx);
                 var val = results.rows.item(0).total;
                 val = val > 0 ? val : 0;
                 var $tile = $("[data-rowid='" + rowid +"']");
@@ -231,7 +252,7 @@ function loadTiles(app){
                 for (var i=0; i<len; i++){
                     tiles.push(results.rows.item(i));
                 }
-                console.log(tiles);
+                
                 $('#container').empty();
                 for(t in tiles){
                     var type = tiles[t].type;
