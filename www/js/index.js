@@ -280,6 +280,7 @@ var init = function(){
         }, 100);
     };
 
+    // -------------------------------------------------------------
     // DB: SEED TILE DATA
     $('[data-type="tally"]').each(function(index, element){
         updateTallyValue(app, $(element).data('rowid'));
@@ -293,6 +294,7 @@ var init = function(){
         updateScaleValue(app, $(element).data('rowid'));
     });
 
+    // -------------------------------------------------------------
     // QUO: TILE INTERACTIONS
     $$('[data-type="tally"]').tap(function(){
         var $me = $(this);
@@ -319,6 +321,7 @@ var init = function(){
         // var $me = $(this);
     });
 
+    // -------------------------------------------------------------
     // overlay handlers
     $$('[toggle-overlay]').on('tap', function($event){
         $event.stopPropagation();
