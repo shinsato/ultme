@@ -266,6 +266,15 @@ var updateScaleValue = function(app,rowid){
     });
 };
 
+var resetTile = function(app,rowid){
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('DELETE FROM response WHERE tile_id = ?', [rowid], function(tx,results){
+                loadTiles(app);
+        });
+    });
+}
+
 function setupDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_order TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS tile (id INTEGER UNIQUE,user_id INTEGER,account_id INTEGER,name TEXT,type TEXT NOT NULL DEFAULT "tally",status TEXT NOT NULL DEFAULT "active",options TEXT,min INTEGER,max INTEGER,created NUMERIC,modified NUMERIC,archived NUMERIC,deleted NUMERIC)');
@@ -332,7 +341,6 @@ var init = function(){
     // overlay handlers
     $$('[toggle-overlay]').on('tap', function($event){
         $event.stopPropagation();
-        $body.toggleClass('overlay-open');
 
         var path = $(this).attr('toggle-overlay');
         var type = $(this).data('type');
@@ -341,16 +349,33 @@ var init = function(){
         // clean out overlay content
         $overlay.removeClass('binary tally scale new').addClass(type);
 
-        if($body.hasClass('overlay-open')) {
-            $overlayBody.html('');
-        }
-
         // fill in overlay content
         if(path.length) {
-            $overlayBody.load(path + '.html');
+            $me = $(this).closest('.item');
+            $.get(path + '.html',[],function(text){
+                var replacement = {
+                                    'rowid':$me.data('rowid')
+                                  };
+                text = replace(text,replacement);
+                $overlayBody.html(text);
+                $body.toggleClass('overlay-open');
+            });
+        } else {
+            $body.toggleClass('overlay-open',function(){
+                $overlayBody.html('');
+            });
         }
     });
 };
+
+function replace(str,data){
+    for(i in data){
+
+        var temp = new RegExp('{{'+i+'}}',"g");console.log(temp);
+        str = str.replace(temp,data[i]);
+    }
+    return str;
+}
 
 function updateTileOrder(app){
     $('#container .item').each(function(index, element){
@@ -376,14 +401,18 @@ var loadTiles = function(app){
                 for(var t in tiles){
                     var type = tiles[t].type;
                     var rowid = tiles[t].rowid;
+                    var options = tiles[t].options;
+                    var name = tiles[t].name;
                     var tile = $('<div class="item ' + type + '"></div>');
                     var tileActions = $('<div class="tile-actions"></div>');
                     tile.attr('data-value', 0);
                     tile.attr('data-type', type);
                     tile.attr('data-rowid', rowid);
+                    tile.data('options', options);
+                    tile.data('name', name);
                     tile.data('value', 0);
                     tile.data('type', type);
-                    tile.append('<h2>' + tiles[t].name + '</h2>');
+                    tile.append('<h2>' + name + '</h2>');
                     switch(type) {
                         case 'binary':
                             tileActions.append('<div class="report-cue" data-type="binary" toggle-overlay="overlay/tile-log">&#9776;</div>');
