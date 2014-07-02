@@ -296,29 +296,39 @@ var init = function(){
 
     // -------------------------------------------------------------
     // QUO: TILE INTERACTIONS
-    $$('[data-type="tally"]').tap(function(){
+    $$('[data-type="tally"]')
+    .tap(function(){
         var $me = $(this);
         saveTallyResponse(app, $me.data('rowid'));
         flashTile($me);
     });
 
-    $$('[data-type="binary"]').swipeRight(function(){
+    $$('[data-type="binary"]').swipeRight(function(event){
         var $me = $(this);
+        console.log(arguments);
         $me.find('.js-display').text('Yes');
-        // saveBinaryResponse(app, $me.data('rowid'), 1);
+        saveBinaryResponse(app, $me.data('rowid'), 1);
     });
-    $$('[data-type="binary"]').swipeLeft(function(){
+    $$('[data-type="binary"]').swipeLeft(function(event){
         var $me = $(this);
+        console.log(arguments);
         $me.find('.js-display').text('No');
-        // saveBinaryResponse(app, $me.data('rowid'), 0);
+        saveBinaryResponse(app, $me.data('rowid'), 0);
     });
 
-    $$('[data-type="binary"]').tap(function(){
-        // var $me = $(this);
+    $$('[data-type="scale"]').swipeRight(function(event){
+        var val = 5; // arguments[0].currentTouch.x;
+        var $me = $(this);
+        console.log(arguments);
+        $me.find('.js-display').text('No');
+        saveScaleResponse(app, $me.data('rowid'), val);
     });
-
-    $$('[data-type="scale"]').tap(function(){
-        // var $me = $(this);
+    $$('[data-type="scale"]').swipeLeft(function(event){
+        var val = -5; // arguments[0].currentTouch.x;
+        var $me = $(this);
+        console.log(arguments);
+        $me.find('.js-display').text('No');
+        saveScaleResponse(app, $me.data('rowid'), val);
     });
 
     // -------------------------------------------------------------
@@ -381,20 +391,20 @@ var loadTiles = function(app){
                         case 'binary':
                             tileActions.append('<div class="report-cue" data-type="binary" toggle-overlay="overlay/tile-log">&#9776;</div>');
                             tileActions.append('<div class="edit-cue" data-type="binary" toggle-overlay="overlay/edit">\u2B21</div>');
-                            tile.append('<label class="js-display string">0</label>');
+                            tile.append('<label class="js-display string">---</label>');
                             tile.append(tileActions);
                             tile.attr('toggle-overlay', 'overlay/tile-binary');
                             break;
                         case 'tally':
                             tileActions.append('<div class="report-cue" data-type="tally" toggle-overlay="overlay/tile-log">&#9776;</div>');
                             tileActions.append('<div class="edit-cue" data-type="tally" toggle-overlay="overlay/edit">\u2B21</div>');
-                            tile.append('<label class="js-display string">0</label>');
+                            tile.append('<label class="js-display string">---</label>');
                             tile.append(tileActions);
                             break;
                         case 'scale':
                             tileActions.append('<div class="report-cue" data-type="scale" toggle-overlay="overlay/tile-log">&#9776;</div>');
                             tileActions.append('<div class="edit-cue" data-type="scale" toggle-overlay="overlay/edit">\u2B21</div>');
-                            tile.append('<label class="js-display string">0</label>');
+                            tile.append('<label class="js-display string">---</label>');
                             tile.append(tileActions);
                             tile.attr('toggle-overlay', 'overlay/tile-scale');
                             break;
