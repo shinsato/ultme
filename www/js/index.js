@@ -173,24 +173,27 @@ var __saveBinaryResponse = function(app,rowid,value,latitude,longitude){
     if(latitude && longitude){
         geo = latitude + ',' + longitude;
     }
+
     app.db.transaction(
         function(tx){
             tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,value,geo,time], function(tx,results){
-                updateBinaryValue(app,rowid,value);
-        });
+                    updateBinaryValue(app,rowid);
+            });
     });
 };
 
 var updateBinaryValue = function(app,rowid){
     app.db.transaction(
         function(tx){
-            tx.executeSql('SELECT response.value, tile.options FROM response left join tile on reponse.tile_id = tile.tile_id WHERE response.tile_id = ? ORDER BY id DESC LIMIT 1', [rowid], function(tx,results){
+            //tx.executeSql('SELECT response.value, tile.options FROM response left join tile on response.tile_id = tile.id WHERE response.tile_id = ? ORDER BY response.id DESC LIMIT 1', [rowid], function(tx,results){
+            tx.executeSql('SELECT * FROM response left join tile on response.tile_id = tile.rowid WHERE response.tile_id = ? ORDER BY response.id DESC LIMIT 1', [rowid], function(tx,results){
                 var $tile = $("[data-rowid='" + rowid +"']");
                 var $display = $($tile.find('.js-display'));
 
                 if(results.rows.length > 0){
                     var val = results.rows.item(0).value;
-                    var options = results.rows.item(0).options;
+                    var options = JSON.parse(results.rows.item(0).options);
+
                     var value = '';
                     if(val > 0){
                         value = options['label-b'];
@@ -205,7 +208,7 @@ var updateBinaryValue = function(app,rowid){
                     $tile.attr('data-value', '0');
                     $tile.data('value', '0');
                 }
-        });
+        },function(tx,results){console.log(tx,results);});
     });
 };
 
@@ -236,12 +239,12 @@ var __saveScaleResponse = function(app,rowid,value,latitude,longitude){
     app.db.transaction(
         function(tx){
             tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,value,geo,time], function(tx,results){
-                updateScaleValue(app,rowid,value);
+                updateScaleValue(app,rowid);
         });
     });
 };
 
-var updateScaleValue = function(app,rowid,value){
+var updateScaleValue = function(app,rowid){
     app.db.transaction(
         function(tx){
             tx.executeSql('SELECT value FROM response WHERE tile_id = ?  ORDER BY id DESC LIMIT 1', [rowid], function(tx,results){
@@ -250,7 +253,7 @@ var updateScaleValue = function(app,rowid,value){
 
                 if(results.rows.length > 0){
                     var val = results.rows.item(0).value;
-                    val = val > 0 ? val : 0;
+
                     $display.text(val);
                     $tile.attr('data-value', val);
                     $tile.data('value', val);
@@ -304,12 +307,10 @@ var init = function(){
 
     $$('[data-type="binary"]').swipeRight(function(event){
         var $me = $$(this);
-        console.log(arguments);
         saveBinaryResponse(app, $me.data('rowid'), 1);
     });
     $$('[data-type="binary"]').swipeLeft(function(event){
         var $me = $$(this);
-        console.log(arguments);
         saveBinaryResponse(app, $me.data('rowid'), 0);
     });
 
