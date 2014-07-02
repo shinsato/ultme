@@ -1,0 +1,42 @@
+// common tile structures
+
+// FORMS
+form {
+    display:block;
+    padding: 1rem;
+}
+.button-bar {
+    @include flex-row();
+    margin-bottom:1em;
+    label {
+        display:block;
+        @include flex-item(1);
+        position:relative;
+        &:first-of-type {
+            span {
+                border-radius: .2em 0 0 .2em;
+            }
+        }
+        &:last-of-type {
+            span {
+                border-radius: 0 .2em .2em 0;
+            }
+        }
+        span {
+            display:block;
+            border:1px solid #000;
+            padding:.5em 0;
+            white-space: nowrap;
+        }
+        input {
+            position:absolute;
+            opacity:0;
+            &:checked {
+                + span {
+                    background: $bg-color;
+                    color: $new-c;
+                }
+            }
+        }
+    }
+}
