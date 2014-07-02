@@ -5,18 +5,12 @@
 	<form>
 		<label for="tile-name"> Edit Title</label>
 		<input type="text" id="tile-name" value="Old Title"></input>
-		<div id="tile-type">
+
+		<div>
+			<button type="submit">Save Tile</button> <a href="#" toggle-overlay>Eh, Nevermind</a>
 		</div>
-		<div id="timebox">
-			<h5>How Often Do We Keep Track You Answering This Question?</h5>
-			<div class="button-bar">
-				<label><input type="radio" name="tile-type" value="today" checked /> <span>Today Only</span></label>
-				<label><input type="radio" name="tile-type" value="week" /> <span>This Week</span></label>
-				<label><input type="radio" name="tile-type" value="month" /> <span>This Month</span></label>
-				<label><input type="radio" name="tile-type" value="forever" /> <span>Forever</span></label>
-			</div>
-		</div>
-		<button type="submit">Save Tile</button> <a href="#" toggle-overlay>Eh, Nevermind</a>
+
+		<button type="button">Delete Tile?</button>
 	</form>
 </section>
 <footer>
