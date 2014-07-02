@@ -176,7 +176,7 @@ var __saveBinaryResponse = function(app,rowid,value,latitude,longitude){
     app.db.transaction(
         function(tx){
             tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,value,geo,time], function(tx,results){
-                updateTallyValue(app,rowid,value);
+                updateBinaryValue(app,rowid,value);
         });
     });
 };
@@ -216,7 +216,7 @@ var __saveScaleResponse = function(app,rowid,value,latitude,longitude){
     app.db.transaction(
         function(tx){
             tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,value,geo,time], function(tx,results){
-                updateTallyValue(app,rowid,value);
+                updateScaleValue(app,rowid,value);
         });
     });
 };
