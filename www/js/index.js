@@ -46,8 +46,8 @@ var app = {
             app.db.transaction(function(tx){tx.executeSql('DROP TABLE tile');});
             app.db.transaction(function(tx){tx.executeSql('DROP TABLE response');});
         }
-        //testInit();
-        //resetDb();
+        // testInit();
+        // resetDb();
     },
     // Bind Event Listeners
     //
@@ -308,32 +308,39 @@ var init = function(){
 
     // -------------------------------------------------------------
     // QUO: TILE INTERACTIONS
-    $$('[data-type="tally"]')
-    .tap(function(){
-        var $me = $(this);
+    $$('[data-type="tally"]').tap(function(){
+        var $me = $$(this);
         saveTallyResponse(app, $me.data('rowid'));
         flashTile($me);
     });
 
     $$('[data-type="binary"]').swipeRight(function(event){
-        var $me = $(this);
+        var $me = $$(this);
         saveBinaryResponse(app, $me.data('rowid'), 1);
     });
     $$('[data-type="binary"]').swipeLeft(function(event){
-        var $me = $(this);
+        var $me = $$(this);
         saveBinaryResponse(app, $me.data('rowid'), 0);
     });
 
-    $$('[data-type="scale"]').swipeRight(function(event){
-        var val = 5; // arguments[0].currentTouch.x;
-        var $me = $(this);
-        console.log(arguments);
-        saveScaleResponse(app, $me.data('rowid'), val);
+    $$('[data-type="scale"]').swiping(function(event){
+        var $me = $$(this);
+        var x = arguments[0].currentTouch.x;
+        var win = window.innerWidth;
+        var slice = win/11;
+        x = x > win ? win - 1 : x;
+        x = x < 0 ? 0 : x;
+        var val = Math.floor(x/slice);
+
+        val = val - 5; // force to use -5 to 5 scale
+
+        $me.find('.js-display').text(val);
+        $me.data('val', val);
     });
-    $$('[data-type="scale"]').swipeLeft(function(event){
-        var val = -5; // arguments[0].currentTouch.x;
-        var $me = $(this);
-        console.log(arguments);
+    $$('[data-type="scale"]').on('touchend', function(){
+        var $me = $$(this);
+        var val = $me.data('val');
+        var rowid = $me.data('rowid');
         saveScaleResponse(app, $me.data('rowid'), val);
     });
 
@@ -419,7 +426,7 @@ var loadTiles = function(app){
                             tileActions.append('<div class="edit-cue" data-type="binary" toggle-overlay="overlay/edit">\u2B21</div>');
                             tile.append('<label class="js-display string">---</label>');
                             tile.append(tileActions);
-                            tile.attr('toggle-overlay', 'overlay/tile-binary');
+                            // tile.attr('toggle-overlay', 'overlay/tile-binary');
                             break;
                         case 'tally':
                             tileActions.append('<div class="report-cue" data-type="tally" toggle-overlay="overlay/tile-log">&#9776;</div>');
@@ -432,7 +439,7 @@ var loadTiles = function(app){
                             tileActions.append('<div class="edit-cue" data-type="scale" toggle-overlay="overlay/edit">\u2B21</div>');
                             tile.append('<label class="js-display string">---</label>');
                             tile.append(tileActions);
-                            tile.attr('toggle-overlay', 'overlay/tile-scale');
+                            // tile.attr('toggle-overlay', 'overlay/tile-scale');
                             break;
                     }
                     $('#container').append(tile);
