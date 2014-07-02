@@ -306,13 +306,11 @@ var init = function(){
     $$('[data-type="binary"]').swipeRight(function(event){
         var $me = $(this);
         console.log(arguments);
-        $me.find('.js-display').text('Yes');
         saveBinaryResponse(app, $me.data('rowid'), 1);
     });
     $$('[data-type="binary"]').swipeLeft(function(event){
         var $me = $(this);
         console.log(arguments);
-        $me.find('.js-display').text('No');
         saveBinaryResponse(app, $me.data('rowid'), 0);
     });
 
@@ -320,14 +318,12 @@ var init = function(){
         var val = 5; // arguments[0].currentTouch.x;
         var $me = $(this);
         console.log(arguments);
-        $me.find('.js-display').text('No');
         saveScaleResponse(app, $me.data('rowid'), val);
     });
     $$('[data-type="scale"]').swipeLeft(function(event){
         var val = -5; // arguments[0].currentTouch.x;
         var $me = $(this);
         console.log(arguments);
-        $me.find('.js-display').text('No');
         saveScaleResponse(app, $me.data('rowid'), val);
     });
 
