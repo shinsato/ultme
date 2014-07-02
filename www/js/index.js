@@ -377,8 +377,7 @@ var init = function(){
 
 function replace(str,data){
     for(i in data){
-
-        var temp = new RegExp('{{'+i+'}}',"g");console.log(temp);
+        var temp = new RegExp('{{'+i+'}}',"g");
         str = str.replace(temp,data[i]);
     }
     return str;
