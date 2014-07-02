@@ -325,6 +325,7 @@ var init = function(){
 
     $$('[data-type="scale"]').swiping(function(event){
         var $me = $$(this);
+        $me.data('swiping','true');
         var x = arguments[0].currentTouch.x;
         var win = window.innerWidth;
         var slice = win/11;
@@ -339,9 +340,12 @@ var init = function(){
     });
     $$('[data-type="scale"]').on('touchend', function(){
         var $me = $$(this);
-        var val = $me.data('val');
-        var rowid = $me.data('rowid');
-        saveScaleResponse(app, $me.data('rowid'), val);
+        if($me.data('swiping') === 'true'){
+            $me.data('swiping','false');
+            var val = $me.data('val');
+            var rowid = $me.data('rowid');
+            saveScaleResponse(app, $me.data('rowid'), val);
+        }
     });
 
     // -------------------------------------------------------------
@@ -360,8 +364,11 @@ var init = function(){
         if(path.length) {
             $me = $(this).closest('.item');
             $.get(path + '.html',[],function(text){
+                var options = JSON.parse($me.data('options'));
                 var replacement = {
-                                    'rowid':$me.data('rowid')
+                                    'rowid':$me.data('rowid'),
+                                    'name':$me.data('name'),
+                                    'options':options
                                   };
                 text = replace(text,replacement);
                 $overlayBody.html(text);
@@ -425,7 +432,6 @@ var loadTiles = function(app){
                             tileActions.append('<div class="edit-cue" data-type="binary" toggle-overlay="overlay/edit">\u2B21</div>');
                             tile.append('<label class="js-display string">---</label>');
                             tile.append(tileActions);
-                            // tile.attr('toggle-overlay', 'overlay/tile-binary');
                             break;
                         case 'tally':
                             tileActions.append('<div class="report-cue" data-type="tally" toggle-overlay="overlay/tile-log">&#9776;</div>');
@@ -438,7 +444,6 @@ var loadTiles = function(app){
                             tileActions.append('<div class="edit-cue" data-type="scale" toggle-overlay="overlay/edit">\u2B21</div>');
                             tile.append('<label class="js-display string">---</label>');
                             tile.append(tileActions);
-                            // tile.attr('toggle-overlay', 'overlay/tile-scale');
                             break;
                     }
                     $('#container').append(tile);

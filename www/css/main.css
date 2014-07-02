@@ -441,6 +441,9 @@ body {
 h1, h2, h3, h4, h5 {
   font-weight: lighter; }
 
+.display-none {
+  display: none; }
+
 .app {
   position: relative;
   z-index: 1;
@@ -509,7 +512,7 @@ h1, h2, h3, h4, h5 {
   .item .int {
     font-size: 5vw; }
   .item .string {
-    font-size: 4vw; }
+    font-size: 6vw; }
   .item.flash {
     background: #ebeced; }
 
