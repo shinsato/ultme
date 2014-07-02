@@ -103,21 +103,6 @@ var app = {
     }
 };
 
-    if(tile['tile-id'] > 0){//Update
-        //nothing to see here
-    } else {//Insert
-        new Date().getTime();
-        time = Date.now();
-        option = {
-                    'label-a':tile['label-a'],
-                    'label-b':tile['label-b'],
-                    'timebox':tile['tile-timebox']};
-        app.db.transaction(function(tx){
-            tx.executeSql('INSERT INTO tile (name,user_id,type,options,created,modified) VALUES(?,?,?,?,?,?)',[tile['tile-name'],app.userid,tile['tile-type'],JSON.stringify(option),time,time],function(tx,results){
-                    loadTiles(app);
-                    $('body').toggleClass('overlay-open');
-                    updateTileOrder(app);
-            });
 var updateTallyValue = function(app,rowid){
     app.db.transaction(
         function(tx){
@@ -328,8 +313,9 @@ $(document).on("pagecreate","#pageone",function(){
         };
         app.db.transaction(function(tx){
             tx.executeSql('INSERT INTO tile (name,user_id,type,options,created,modified) VALUES(?,?,?,?,?,?)',[tile['tile-name'],app.userid,tile['tile-type'],JSON.stringify(option),time,time],function(tx,results){
-                    $('body').toggleClass('overlay-open');
                     loadTiles(app);
+                    $('body').toggleClass('overlay-open');
+                    updateTileOrder(app);
             });
         });
     }
