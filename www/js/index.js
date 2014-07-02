@@ -193,6 +193,17 @@ var init = function(){
         flashTile($me);
     });
 
+    $$('[data-type="binary"]').swipeRight(function(){
+        var $me = $(this);
+        $me.find('.js-display').text('Yes');
+        // saveBinaryResponse(app, $me.data('rowid'), 1);
+    });
+    $$('[data-type="binary"]').swipeLeft(function(){
+        var $me = $(this);
+        $me.find('.js-display').text('No');
+        // saveBinaryResponse(app, $me.data('rowid'), 0);
+    });
+
     $$('[data-type="binary"]').tap(function(){
         // var $me = $(this);
     });
