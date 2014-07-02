@@ -103,8 +103,9 @@
 	right:0;
 	bottom:0;
 	@include flex-row();
+	font-size: 2.5vw;
 	div {
-		padding: .5rem;
+		padding: 1vw;
 		line-height: 1;
 		&:hover {
 			background: rgba(#FFF, .15);
