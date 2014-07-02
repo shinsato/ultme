@@ -103,6 +103,36 @@ var app = {
     }
 };
 
+var saveTallyResponse = function(app,rowid){
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position){
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            __saveTallyResponse(app,rowid,latitude,longitude);
+        },
+        function(){
+            __saveTallyResponse(app,rowid,null,null);
+        });
+    } else{
+        __saveTallyResponse(app,rowid,null,null);
+    }
+};
+
+var __saveTallyResponse = function(app,rowid,latitude,longitude){
+    new Date().getTime();
+    var time = Date.now();
+    var geo = '';
+    if(latitude && longitude){
+        geo = latitude + ',' + longitude;
+    }
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,1,geo,time], function(tx,results){
+                updateTallyValue(app,rowid);
+        });
+    });
+};
+
 var updateTallyValue = function(app,rowid){
     app.db.transaction(
         function(tx){
@@ -126,40 +156,11 @@ var updateScaleValue = function(app,rowid){
     // do the thing, magic man
 };
 
-var __saveTallyResponse = function(app,rowid,latitude,longitude){
-    new Date().getTime();
-    var time = Date.now();
-    var geo = '';
-    if(latitude && longitude){
-        geo = latitude + ',' + longitude;
-    }
-    app.db.transaction(
-        function(tx){
-            tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,1,geo,time], function(tx,results){
-                updateTallyValue(app,rowid);
-        });
-    });
-};
-
 function setupDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_order TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS tile (id INTEGER UNIQUE,user_id INTEGER,account_id INTEGER,name TEXT,type TEXT NOT NULL DEFAULT "tally",status TEXT NOT NULL DEFAULT "active",options TEXT,min INTEGER,max INTEGER,created NUMERIC,modified NUMERIC,archived NUMERIC,deleted NUMERIC)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS response (id INTEGER UNIQUE,account_id INTEGER,user_id INTEGER,tile_id INTEGER,value INTEGER,geolocation TEXT,created NUMERIC)');
 }
-var saveTallyResponse = function(app,rowid){
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position){
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            __saveTallyResponse(app,rowid,latitude,longitude);
-        },
-        function(){
-            __saveTallyResponse(app,rowid,null,null);
-        });
-    } else{
-        __saveTallyResponse(app,rowid,null,null);
-    }
-};
 
 var init = function(){
     var $body = $('body');
