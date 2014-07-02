@@ -103,6 +103,8 @@ var app = {
     }
 };
 
+//========================================================================
+//===============================TALLY====================================
 var saveTallyResponse = function(app,rowid){
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position){
@@ -147,13 +149,84 @@ var updateTallyValue = function(app,rowid){
         });
     });
 };
-
-var updateBinaryValue = function(app,rowid){
-    // do the thing, magic man
+//========================================================================
+//==============================BINARY====================================
+var saveBinaryResponse = function(app,rowid,value){
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position){
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            __saveBinaryResponse(app,rowid,value,latitude,longitude);
+        },
+        function(){
+            __saveBinaryResponse(app,rowid,value,null,null);
+        });
+    } else{
+        __saveBinaryResponse(app,rowid,value,null,null);
+    }
 };
 
-var updateScaleValue = function(app,rowid){
-    // do the thing, magic man
+var __saveBinaryResponse = function(app,rowid,value,latitude,longitude){
+    new Date().getTime();
+    var time = Date.now();
+    var geo = '';
+    if(latitude && longitude){
+        geo = latitude + ',' + longitude;
+    }
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,value,geo,time], function(tx,results){
+                updateTallyValue(app,rowid,value);
+        });
+    });
+};
+
+var updateBinaryValue = function(app,rowid,value){
+    var $tile = $("[data-rowid='" + rowid +"']");
+    var $display = $($tile.find('.js-display'));
+    $display.text(value);
+    $tile.attr('data-value', value);
+    $tile.data('value', value);
+};
+
+//========================================================================
+//===============================SCALE====================================
+var saveScaleResponse = function(app,rowid,value){
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position){
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            __saveScaleResponse(app,rowid,value,latitude,longitude);
+        },
+        function(){
+            __saveScaleResponse(app,rowid,value,null,null);
+        });
+    } else{
+        __saveScaleResponse(app,rowid,value,null,null);
+    }
+};
+
+var __saveScaleResponse = function(app,rowid,value,latitude,longitude){
+    new Date().getTime();
+    var time = Date.now();
+    var geo = '';
+    if(latitude && longitude){
+        geo = latitude + ',' + longitude;
+    }
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('INSERT INTO response (tile_id,user_id,value,geolocation,created) VALUES (?,?,?,?,?)', [rowid,app.userid,value,geo,time], function(tx,results){
+                updateTallyValue(app,rowid,value);
+        });
+    });
+};
+
+var updateScaleValue = function(app,rowid,value){
+    var $tile = $("[data-rowid='" + rowid +"']");
+    var $display = $($tile.find('.js-display'));
+    $display.text(value);
+    $tile.attr('data-value', value);
+    $tile.data('value', value);
 };
 
 function setupDB(tx) {
