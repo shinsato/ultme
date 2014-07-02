@@ -117,6 +117,7 @@ $(document).on("pagecreate","#pageone",function(){
             tx.executeSql('INSERT INTO tile (name,user_id,type,options,created,modified) VALUES(?,?,?,?,?,?)',[tile['tile-name'],app.userid,tile['tile-type'],JSON.stringify(option),time,time],function(tx,results){
                     loadTiles(app);
                     $('body').toggleClass('overlay-open');
+                    updateTileOrder(app);
             });
         });
     }
@@ -132,7 +133,7 @@ $(document).on("pagecreate","#pageone",function(){
 //==============================================================================
 
 function setupDB(tx) {
-    tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_list TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_order TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS tile (id INTEGER UNIQUE,user_id INTEGER,account_id INTEGER,name TEXT,type TEXT NOT NULL DEFAULT "tally",status TEXT NOT NULL DEFAULT "active",options TEXT,min INTEGER,max INTEGER,created NUMERIC,modified NUMERIC,archived NUMERIC,deleted NUMERIC)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS response (id INTEGER UNIQUE,account_id INTEGER,user_id INTEGER,tile_id INTEGER,value INTEGER,geolocation TEXT,created NUMERIC)');
 }
@@ -240,6 +241,16 @@ function updateTallyCount(app,rowid){
                 $tile.attr('data-value', val);
                 $tile.data('value', val);
         });
+    });
+}
+
+function updateTileOrder(app){
+    $('#container .item').each(function(index, element){
+        order = []
+        $e = $(element);
+        if($e.data('rowid') != ''){
+            order.push($e.data('rowid'));
+        }
     });
 }
 
