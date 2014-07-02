@@ -441,9 +441,6 @@ body {
 h1, h2, h3, h4, h5 {
   font-weight: lighter; }
 
-.display-none {
-  display: none; }
-
 .app {
   position: relative;
   z-index: 1;
@@ -536,9 +533,10 @@ h1, h2, h3, h4, h5 {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
-  flex-direction: row; }
+  flex-direction: row;
+  font-size: 2.5vw; }
   .tile-actions div {
-    padding: .5rem;
+    padding: 1vw;
     line-height: 1; }
     .tile-actions div:hover {
       background: rgba(255, 255, 255, 0.15); }
