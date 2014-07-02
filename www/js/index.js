@@ -181,12 +181,32 @@ var __saveBinaryResponse = function(app,rowid,value,latitude,longitude){
     });
 };
 
-var updateBinaryValue = function(app,rowid,value){
-    var $tile = $("[data-rowid='" + rowid +"']");
-    var $display = $($tile.find('.js-display'));
-    $display.text(value);
-    $tile.attr('data-value', value);
-    $tile.data('value', value);
+var updateBinaryValue = function(app,rowid){
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('SELECT response.value, tile.options FROM response left join tile on reponse.tile_id = tile.tile_id WHERE response.tile_id = ? ORDER BY id DESC LIMIT 1', [rowid], function(tx,results){
+                var $tile = $("[data-rowid='" + rowid +"']");
+                var $display = $($tile.find('.js-display'));
+
+                if(results.rows.length > 0){
+                    var val = results.rows.item(0).value;
+                    var options = results.rows.item(0).options;
+                    var value = '';
+                    if(val > 0){
+                        value = options['label-b'];
+                    } else {
+                        value = options['label-a'];
+                    }
+                    $display.text(value);
+                    $tile.attr('data-value', value);
+                    $tile.data('value', value);
+                } else {
+                    $display.text('0');
+                    $tile.attr('data-value', '0');
+                    $tile.data('value', '0');
+                }
+        });
+    });
 };
 
 //========================================================================
@@ -222,11 +242,25 @@ var __saveScaleResponse = function(app,rowid,value,latitude,longitude){
 };
 
 var updateScaleValue = function(app,rowid,value){
-    var $tile = $("[data-rowid='" + rowid +"']");
-    var $display = $($tile.find('.js-display'));
-    $display.text(value);
-    $tile.attr('data-value', value);
-    $tile.data('value', value);
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('SELECT value FROM response WHERE tile_id = ?  ORDER BY id DESC LIMIT 1', [rowid], function(tx,results){
+                var $tile = $("[data-rowid='" + rowid +"']");
+                var $display = $($tile.find('.js-display'));
+
+                if(results.rows.length > 0){
+                    var val = results.rows.item(0).value;
+                    val = val > 0 ? val : 0;
+                    $display.text(val);
+                    $tile.attr('data-value', val);
+                    $tile.data('value', val);
+                } else {
+                    $display.text('0');
+                    $tile.attr('data-value', '0');
+                    $tile.data('value', '0');
+                }
+        });
+    });
 };
 
 function setupDB(tx) {
