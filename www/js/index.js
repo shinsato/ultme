@@ -266,11 +266,23 @@ var updateScaleValue = function(app,rowid){
     });
 };
 
-var resetTile = function(app,rowid){
+var resetTile = function(app,tile_id){
     app.db.transaction(
         function(tx){
-            tx.executeSql('DELETE FROM response WHERE tile_id = ?', [rowid], function(tx,results){
+            tx.executeSql('DELETE FROM response WHERE tile_id = ?', [tile_id], function(tx,results){
                 loadTiles(app);
+        });
+    });
+}
+
+var deleteTile = function(app,tile_id){
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('DELETE FROM response WHERE tile_id = ?', [tile_id], function(tx,results){
+                tx.executeSql('DELETE FROM tile WHERE tile_id = ?', [tile_id], function(tx,results){
+                    loadTiles(app);
+                    updateTileOrder(app);
+                });
         });
     });
 }
