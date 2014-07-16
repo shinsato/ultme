@@ -287,6 +287,18 @@ var deleteTile = function(app,tile_id){
     });
 }
 
+var editTile = function(app,tile_id,tile_name,left_label,right_label,time_scale){
+    app.db.transaction(
+        function(tx){
+            tx.executeSql('DELETE FROM response WHERE tile_id = ?', [tile_id], function(tx,results){
+                tx.executeSql('DELETE FROM tile WHERE tile_id = ?', [tile_id], function(tx,results){
+                    loadTiles(app);
+                    updateTileOrder(app);
+                });
+        });
+    });
+}
+
 function setupDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_order TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS tile (id INTEGER UNIQUE,user_id INTEGER,account_id INTEGER,name TEXT,type TEXT NOT NULL DEFAULT "tally",status TEXT NOT NULL DEFAULT "active",options TEXT,min INTEGER,max INTEGER,created NUMERIC,modified NUMERIC,archived NUMERIC,deleted NUMERIC)');
@@ -376,7 +388,7 @@ var init = function(){
         if(path.length) {
             $me = $(this).closest('.item');
             $.get(path + '.html',[],function(text){
-                var options = JSON.parse($me.data('options'));
+                var options = $me.data('options') ? JSON.parse($me.data('options')) : {};
                 var replacement = {
                                     'rowid':$me.data('rowid'),
                                     'name':$me.data('name'),
