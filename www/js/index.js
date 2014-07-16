@@ -288,6 +288,9 @@ var deleteTile = function(app,tile_id){
 }
 
 var editTile = function(app,tile_id,tile_name,label_a,label_b,timebox){
+
+    console.log(app,tile_id,tile_name,label_a,label_b,timebox);
+
     app.db.transaction(
         function(tx){
             tx.executeSql('SELECT options FROM tile where rowid = ?', [tile_id],
@@ -307,6 +310,20 @@ var editTile = function(app,tile_id,tile_name,label_a,label_b,timebox){
             });
     });
 }
+
+$(document).on('submit', '#form-tile-edit', function(){
+    var self = $(this);
+    var tile = [];
+    $.each(self.serializeArray(), function(_, kv) {
+        tile[kv.name] = kv.value;
+    });
+    console.log(tile);
+    editTile(app, tile['tile-id'], tile['tile-name'], tile['label-a'], tile['label-b'], tile['tile-timebox']);
+    $('body').toggleClass('overlay-open',function(){
+        $('.overlay').find('.overlay-body').html('');
+    });
+});
+
 
 function setupDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_order TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
@@ -398,7 +415,6 @@ var init = function(){
             $me = $(this).closest('.item');
             $.get(path + '.html',[],function(text){
                 var options = $me.data('options') ? JSON.parse($me.data('options')) : {};
-                console.log(options.timebox);
                 var replacement = {
                                     'type': type,
                                     'rowid': $me.data('rowid'),
@@ -410,7 +426,6 @@ var init = function(){
                                     'timeboxmonth': (options.timebox === 'month' ? 'checked' : ''),
                                     'timeboxforever': (options.timebox === 'forever' ? 'checked' : '')
                                   };
-                console.log(replacement);
                 text = replace(text,replacement);
                 $overlayBody.html(text);
                 $body.toggleClass('overlay-open');

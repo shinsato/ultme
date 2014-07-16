@@ -2,9 +2,10 @@
 	Edit Tile
 </header>
 <section>
-	<form>
+	<form id="form-tile-edit" data-rowid="{{rowid}}">
+		<input type="hidden" id="tile-id" name="tile-id" value="{{rowid}}" />
 		<label for="tile-name">Edit Title</label>
-		<input type="text" id="tile-name" value="{{name}}" />
+		<input type="text" id="tile-name" name="tile-name" value="{{name}}" />
 
 		<div id="options-binary">
 			<label for="label-a">Label A</label>
@@ -30,7 +31,7 @@
 		</div>
 
 		<div>
-			<button type="submit" data-rowid="{{rowid}}">Save Tile</button> <a href="#" toggle-overlay>Eh, Nevermind</a>
+			<button type="submit" data-rowid="{{rowid}}" id="button-save-tile">Save Tile</button> <a href="#" toggle-overlay>Eh, Nevermind</a>
 		</div>
 
 		<button type="button" data-rowid="{{rowid}}">Delete Tile?</button>
