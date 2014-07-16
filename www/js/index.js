@@ -405,15 +405,15 @@ var init = function(){
 
     // -------------------------------------------------------------
     // overlay handlers
-    $$('[toggle-overlay]').on('tap', function($event){
+    $$(document).on('tap', '[toggle-overlay]', function($event){
         $event.stopPropagation();
 
         var path = $(this).attr('toggle-overlay');
         var type = $(this).data('type');
-        var $overlayBody = $overlay.find('.overlay-body');
+        var $overlayBody = $('.overlay-body');
 
         // clean out overlay content
-        $overlay.removeClass('binary tally scale new').addClass(type);
+        $('.overlay').removeClass('binary tally scale new').addClass(type);
 
         // fill in overlay content
         if(path.length) {
@@ -433,10 +433,10 @@ var init = function(){
                                   };
                 text = replace(text,replacement);
                 $overlayBody.html(text);
-                $body.toggleClass('overlay-open');
+                $('body').toggleClass('overlay-open');
             });
         } else {
-            $body.toggleClass('overlay-open',function(){
+            $('body').toggleClass('overlay-open',function(){
                 $overlayBody.html('');
             });
         }
