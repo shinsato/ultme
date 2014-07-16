@@ -3,9 +3,10 @@
 </header>
 <section>
 	<form id="update-tile">
-		<input type="hidden" id="tile-id" name="tile-id" value=""/>
+		<input type="hidden" id="tile-id" name="tile-id" value="" />
+
 		<label for="tile-name"> Tile Name/Question?</label>
-		<input type="text" id="tile-name" name="tile-name"></input>
+		<input type="text" id="tile-name" name="tile-name" />
 
 		<div id="tile-type">
 			<h4>Tile Type:</h4>
@@ -29,10 +30,17 @@
 
 		<div id="timebox">
 			<h5>How Often Do We Keep Track You Answering This Question?</h5>
-			<input type="radio" id="timebox-today" name="tile-timebox" value="today" checked>Today Only</input>
-			<input type="radio" id="timebox-week" name="tile-timebox" value="week">This Week</input>
-			<input type="radio" id="timebox-month" name="tile-timebox" value="month">This Month</input>
-			<input type="radio" id="timebox-forever" name="tile-timebox" value="forever">Always</input>
+			<input type="radio" id="timebox-today" name="tile-timebox" value="today" checked>
+			<label for="timebox-today">Today Only</label>
+
+			<input type="radio" id="timebox-week" name="tile-timebox" value="week">
+			<label for="timebox-week">This Week</label>
+
+			<input type="radio" id="timebox-month" name="tile-timebox" value="month">
+			<label for="timebox-month">This Month</label>
+
+			<input type="radio" id="timebox-forever" name="tile-timebox" value="forever">
+			<label for="timebox-forever">Always</label>
 		</div>
 
 		<button type="submit" id="update-tile-save">Save Tile</button> <a href="#" toggle-overlay>Eh, Nevermind</a>
