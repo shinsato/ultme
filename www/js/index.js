@@ -288,8 +288,13 @@ var deleteTile = function(app,tile_id){
 }
 
 var editTile = function(app,tile_id,tile_name,label_a,label_b,timebox){
+    if(!app || tile_id < 1)
+        return false;
 
-    console.log(app,tile_id,tile_name,label_a,label_b,timebox);
+    tile_name = tile_name || '';
+    label_a = label_a || '';
+    label_b = label_b || '';
+    timebox = timebox || '';
 
     app.db.transaction(
         function(tx){
@@ -317,11 +322,11 @@ $(document).on('submit', '#form-tile-edit', function(){
     $.each(self.serializeArray(), function(_, kv) {
         tile[kv.name] = kv.value;
     });
-    console.log(tile);
     editTile(app, tile['tile-id'], tile['tile-name'], tile['label-a'], tile['label-b'], tile['tile-timebox']);
     $('body').toggleClass('overlay-open',function(){
         $('.overlay').find('.overlay-body').html('');
     });
+    return false;
 });
 
 
