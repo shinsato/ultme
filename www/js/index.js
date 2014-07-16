@@ -276,13 +276,14 @@ var resetTile = function(app,tile_id){
 }
 
 var deleteTile = function(app,tile_id){
-    app.db.transaction(
-        function(tx){
-            tx.executeSql('DELETE FROM response WHERE tile_id = ?', [tile_id], function(tx,results){
-                tx.executeSql('DELETE FROM tile WHERE tile_id = ?', [tile_id], function(tx,results){
+    app.db.transaction(function(tx){
+        tx.executeSql('DELETE FROM response WHERE tile_id = ?', [tile_id], function(tx,results){
+            app.db.transaction(function(tx){
+                tx.executeSql('DELETE FROM tile WHERE rowid = ?', [tile_id], function(tx,results){
                     loadTiles(app);
                     updateTileOrder(app);
                 });
+            });
         });
     });
 }
@@ -329,6 +330,23 @@ $(document).on('submit', '#form-tile-edit', function(){
     return false;
 });
 
+$(document).on('click', '#button-reset-tile', function(){
+    var self = $(this);
+    resetTile(app,self.data('rowid'));
+    $('body').toggleClass('overlay-open',function(){
+        $('.overlay').find('.overlay-body').html('');
+    });
+    return false;
+});
+
+$(document).on('click', '#button-delete-tile', function(){
+    var self = $(this);
+    deleteTile(app,self.data('rowid'));
+    $('body').toggleClass('overlay-open',function(){
+        $('.overlay').find('.overlay-body').html('');
+    });
+    return false;
+});
 
 function setupDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER UNIQUE,account_id INTEGER,name TEXT,email TEXT,password TEXT,tile_order TEXT, created NUMERIC, modified NUMERIC,deleted NUMERIC)');
