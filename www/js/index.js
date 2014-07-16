@@ -398,11 +398,19 @@ var init = function(){
             $me = $(this).closest('.item');
             $.get(path + '.html',[],function(text){
                 var options = $me.data('options') ? JSON.parse($me.data('options')) : {};
+                console.log(options.timebox);
                 var replacement = {
-                                    'rowid':$me.data('rowid'),
-                                    'name':$me.data('name'),
-                                    'options':options
+                                    'type': type,
+                                    'rowid': $me.data('rowid'),
+                                    'name': $me.data('name'),
+                                    'labela': options['label-a'],
+                                    'labelb': options['label-b'],
+                                    'timeboxtoday': (options.timebox === 'today' ? 'checked' : ''),
+                                    'timeboxweek': (options.timebox === 'week' ? 'checked' : ''),
+                                    'timeboxmonth': (options.timebox === 'month' ? 'checked' : ''),
+                                    'timeboxforever': (options.timebox === 'forever' ? 'checked' : '')
                                   };
+                console.log(replacement);
                 text = replace(text,replacement);
                 $overlayBody.html(text);
                 $body.toggleClass('overlay-open');
