@@ -273,7 +273,7 @@ var resetTile = function(app,tile_id){
                 loadTiles(app);
         });
     });
-}
+};
 
 var deleteTile = function(app,tile_id){
     app.db.transaction(function(tx){
@@ -286,7 +286,7 @@ var deleteTile = function(app,tile_id){
             });
         });
     });
-}
+};
 
 var editTile = function(app,tile_id,tile_name,label_a,label_b,timebox){
     if(!app || tile_id < 1)
@@ -315,7 +315,7 @@ var editTile = function(app,tile_id,tile_name,label_a,label_b,timebox){
                     });
             });
     });
-}
+};
 
 $(document).on('submit', '#form-tile-edit', function(){
     var self = $(this);
@@ -381,7 +381,7 @@ var init = function(){
 
     // -------------------------------------------------------------
     // QUO: TILE INTERACTIONS
-    $$('[data-type="tally"]').tap(function(){
+    $$(document).on('tap', '[data-type="tally"]', function(){
         var $me = $$(this);
         saveTallyResponse(app, $me.data('rowid'));
         flashTile($me);
@@ -428,7 +428,6 @@ var init = function(){
 
         var path = $(this).attr('toggle-overlay');
         var type = $(this).data('type');
-        var $overlayBody = $('.overlay-body');
 
         // clean out overlay content
         $('.overlay').removeClass('binary tally scale new').addClass(type);
@@ -450,19 +449,19 @@ var init = function(){
                                     'timeboxforever': (options.timebox === 'forever' ? 'checked' : '')
                                   };
                 text = replace(text,replacement);
-                $overlayBody.html(text);
+                $('.overlay-body').html(text);
                 $('body').toggleClass('overlay-open');
             });
         } else {
             $('body').toggleClass('overlay-open',function(){
-                $overlayBody.html('');
+                $('.overlay-body').html('');
             });
         }
     });
 };
 
 function replace(str,data){
-    for(i in data){
+    for(var i in data){
         var temp = new RegExp('{{'+i+'}}',"g");
         str = str.replace(temp,data[i]);
     }
@@ -471,9 +470,9 @@ function replace(str,data){
 
 function updateTileOrder(app){
     $('#container .item').each(function(index, element){
-        order = []
-        $e = $(element);
-        if($e.data('rowid') != ''){
+        var order = [];
+        var $e = $(element);
+        if($e.data('rowid') !== ''){
             order.push($e.data('rowid'));
         }
     });
