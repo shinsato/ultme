@@ -5,6 +5,14 @@ form {
     display:block;
     padding: 1rem;
 }
+
+.edit-tile-tally,
+.edit-tile-scale {
+        #options-binary {
+            display: none;
+        }
+}
+
 .button-bar {
     @include flex-row();
     margin-bottom:1em;
