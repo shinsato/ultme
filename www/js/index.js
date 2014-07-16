@@ -106,7 +106,7 @@ var app = {
 //========================================================================
 //===============================TALLY====================================
 var saveTallyResponse = function(app,rowid){
-    if ("geolocation" in navigator) {
+    if (false && "geolocation" in navigator) {//Turning off geolocation for now
         navigator.geolocation.getCurrentPosition(function(position){
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
@@ -152,7 +152,7 @@ var updateTallyValue = function(app,rowid){
 //========================================================================
 //==============================BINARY====================================
 var saveBinaryResponse = function(app,rowid,value){
-    if ("geolocation" in navigator) {
+    if (false && "geolocation" in navigator) {//Turning off geolocation for now
         navigator.geolocation.getCurrentPosition(function(position){
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
@@ -215,7 +215,7 @@ var updateBinaryValue = function(app,rowid){
 //========================================================================
 //===============================SCALE====================================
 var saveScaleResponse = function(app,rowid,value){
-    if ("geolocation" in navigator) {
+    if (false && "geolocation" in navigator) {//Turning off geolocation for now
         navigator.geolocation.getCurrentPosition(function(position){
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
@@ -287,15 +287,24 @@ var deleteTile = function(app,tile_id){
     });
 }
 
-var editTile = function(app,tile_id,tile_name,left_label,right_label,time_scale){
+var editTile = function(app,tile_id,tile_name,label_a,label_b,timebox){
     app.db.transaction(
         function(tx){
-            tx.executeSql('DELETE FROM response WHERE tile_id = ?', [tile_id], function(tx,results){
-                tx.executeSql('DELETE FROM tile WHERE tile_id = ?', [tile_id], function(tx,results){
-                    loadTiles(app);
-                    updateTileOrder(app);
-                });
-        });
+            tx.executeSql('SELECT options FROM tile where rowid = ?', [tile_id],
+            function(tx,results){
+                    new Date().getTime();
+                    var time = Date.now();
+                    var options = JSON.parse(results.rows.item(0).options);
+                    options['label-a'] = label_a;
+                    options['label-b'] = label_b;
+                    options['timebox'] = timebox;
+                    app.db.transaction(
+                        function(tx){
+                            tx.executeSql('UPDATE tile SET name = ?, options = ?, modified = ? WHERE rowid = ?', [tile_name,JSON.stringify(options),time,tile_id], function(tx,results){
+                                loadTiles(app);
+                        });
+                    });
+            });
     });
 }
 
